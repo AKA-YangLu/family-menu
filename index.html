@@ -370,6 +370,10 @@ main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
 .share-pick-bar .btn.primary{background:var(--red);border-color:var(--red);color:#FFF6EA;}
 .share-pick-bar .btn.ghost{background:transparent;color:#FFF6EA;border-color:#FFF6EA;}
 .share-pick-bar .btn.disabled{opacity:.45;pointer-events:none;}
+/* 访客点菜模式：隐藏底部导航与悬浮购物车 */
+body.mode-guest .tab-bar{display:none;}
+body.mode-guest .cart-fab{display:none;}
+body.mode-guest{padding-bottom:24px;}
 
 /* 图片上传 */
 .img-input-row{display:flex;gap:8px;align-items:center;}
@@ -1517,6 +1521,7 @@ function renderShare(){
   const emptyEl=document.getElementById('shareEmpty');
   document.getElementById('shareDate').textContent='家庭点菜 · '+formatToday();
   currentInvite=null; guestSel={};
+  document.body.classList.remove('mode-guest');
   if(!t||!code){
     listEl.innerHTML=''; actionsEl.innerHTML=''; bannerEl.innerHTML=''; emptyEl.style.display='block';
     return;
@@ -1530,12 +1535,15 @@ function renderShare(){
   }
 
   if(t==='invite'){
+    document.body.classList.add('mode-guest');
     currentInvite=data;
     // 仅首次进入该链接时初始化勾选，避免点击后重置
     if(guestInitKey!==code){ guestInitKey=code; guestSel={}; data.forEach((item,i)=>{ guestSel[i]=item.qty||1; }); }
     bannerEl.innerHTML='<div class="mode-banner guest">'
       +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>'
-      +'<b>访客点菜模式</b>：主人搭配好的菜单，点卡片可勾选、改份数，完成后生成回传链接。'
+      +'<b>访客点菜模式</b>：点卡片勾选或改份数，可全选或一键取消。'
+      +'<button class="btn small blue mode-btn" id="btnGuestAll" type="button">全选</button>'
+      +'<button class="btn small ghost mode-btn" id="btnGuestNone" type="button">一键取消</button>'
       +'<button class="btn small blue mode-btn" id="btnBackResult" type="button">生成回传链接</button></div>';
     renderGuestList();
     actionsEl.innerHTML='';
@@ -1560,6 +1568,17 @@ function renderShare(){
   }
 }
 
+function guestAll(){
+  if(!currentInvite) return;
+  currentInvite.forEach((item,i)=>{ guestSel[i]=item.qty||1; });
+  renderGuestList();
+  toast('已全选 '+currentInvite.length+' 道');
+}
+function guestNone(){
+  guestSel={};
+  renderGuestList();
+  toast('已取消全部勾选');
+}
 function renderGuestList(){
   if(!currentInvite) return;
   document.getElementById('shareList').innerHTML=currentInvite.map((item,i)=>renderGuestCard(item,i)).join('');
@@ -1948,6 +1967,8 @@ document.addEventListener('click', (e)=>{
   const t=e.target;
   if(t.closest('#btnBackResult')){ openShareModal('result'); }
   else if(t.closest('#btnCollectResult')){ collectResultToCart(); }
+  else if(t.closest('#btnGuestAll')){ guestAll(); }
+  else if(t.closest('#btnGuestNone')){ guestNone(); }
 });
 
 /* 点击遮罩/ESC 关闭弹层 */
