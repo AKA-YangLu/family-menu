@@ -360,6 +360,25 @@ main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
 .share-note{text-align:center;font-size:13px;color:var(--ink-soft);margin:6px 0 4px;}
 .share-note b{color:var(--red);font-weight:600;}
 
+/* 菜谱分享选菜浮动条 */
+.share-pick-bar{display:none;position:fixed;left:50%;transform:translateX(-50%);bottom:96px;z-index:70;align-items:center;gap:10px;
+  background:var(--ink);color:#FFF6EA;padding:10px 16px;border-radius:999px;box-shadow:0 6px 18px rgba(74,55,40,.35);
+  font-size:14px;white-space:nowrap;font-family:'Ma Shan Zheng','KaiTi','STKaiti',cursive;}
+.share-pick-bar.show{display:flex;}
+.share-pick-bar b{color:#FFD479;}
+.share-pick-bar .btn{padding:7px 14px;font-size:14px;color:#FFF6EA;}
+.share-pick-bar .btn.primary{background:var(--red);border-color:var(--red);color:#FFF6EA;}
+.share-pick-bar .btn.ghost{background:transparent;color:#FFF6EA;border-color:#FFF6EA;}
+.share-pick-bar .btn.disabled{opacity:.45;pointer-events:none;}
+
+/* 图片上传 */
+.img-input-row{display:flex;gap:8px;align-items:center;}
+.img-input-row .form-input{flex:1;}
+.img-input-row .btn{flex:none;margin:0;}
+.upload-preview{display:flex;align-items:center;gap:10px;margin-top:8px;padding:8px;border:1.6px dashed var(--ink-soft);border-radius:8px;background:var(--card);}
+.upload-preview img{width:64px;height:64px;object-fit:cover;border-radius:6px;border:1.6px solid var(--ink);}
+.upload-preview .btn{margin:0;padding:6px 10px;font-size:12px;}
+
 /* 分享页访客选择态 */
 .dish-card.guest-off{opacity:.55;}
 .dish-card.guest-off .dish-pic img,.dish-card.guest-off .dish-pic .dish-ph{filter:grayscale(.5);}
@@ -397,6 +416,7 @@ main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
   .rand-controls{flex-direction:column;}
   main{padding:6px 12px 30px;}
   .cart-fab{bottom:84px;right:14px;}
+  .share-pick-bar{left:12px;right:12px;transform:none;justify-content:center;border-radius:14px;white-space:normal;flex-wrap:wrap;bottom:88px;}
   .today-hero{padding:18px 16px 16px;}
 }
 @media (min-width:769px){
@@ -451,10 +471,6 @@ main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
           智能搭配
         </button>
-        <button class="btn" id="btnInvite">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>
-          分享给家人点菜
-        </button>
         <button class="btn green" id="btnShopList">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h3l1.5 11a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H7.5"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg>
           采购清单
@@ -478,6 +494,10 @@ main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
       </h2>
       <span class="sticker yellow" id="recipeCount"></span>
       <div class="spacer"></div>
+      <button class="btn" id="btnShareRecipes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>
+        分享给家人点菜
+      </button>
       <button class="btn primary" id="btnAddRecipe">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
         记一道菜
@@ -590,6 +610,14 @@ main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h3l1.5 11a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H7.5"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg>
   <span class="fab-badge" id="fabBadge">0</span>
 </button>
+
+<!-- 菜谱分享选菜浮动条 -->
+<div class="share-pick-bar" id="sharePickBar">
+  <span>已选 <b id="sharePickCount">0</b> 道</span>
+  <button class="btn primary" id="btnGenInvite" type="button">生成分享链接</button>
+  <button class="btn ghost" id="btnExitSharePick" type="button">退出</button>
+</div>
+
 <div class="overlay" id="cartOverlay">
   <div class="cart-panel">
     <div class="cart-head">
@@ -608,10 +636,6 @@ main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
     </div>
     <div class="cart-foot">
       <span class="cart-total" id="cartTotal"></span>
-      <button class="btn small" id="btnShareFromCart">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>
-        分享
-      </button>
       <button class="btn small green" id="btnShopFromCart">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h3l1.5 11a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 8H7.5"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg>
         采购清单
@@ -671,8 +695,16 @@ main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
       </div>
       <div class="form-field">
         <label class="form-label">菜品图片</label>
-        <input class="form-input" id="f-img" type="text" maxlength="300" placeholder="粘贴图片链接，或从下方选一张">
+        <div class="img-input-row">
+          <input class="form-input" id="f-img" type="text" maxlength="300" placeholder="粘贴图片链接，或上传本地图片">
+          <label class="btn small" for="f-img-file">上传图片</label>
+          <input type="file" id="f-img-file" accept="image/*" style="display:none;">
+        </div>
         <div class="preset-imgs" id="presetImgs"></div>
+        <div class="upload-preview" id="uploadPreview" style="display:none;">
+          <img id="uploadPreviewImg" alt="已上传图片">
+          <button type="button" class="btn small ghost" id="btnRemoveUpload">移除这张图</button>
+        </div>
       </div>
       <div class="form-actions">
         <button type="button" class="btn ghost" id="btnCancel">算了</button>
@@ -837,6 +869,8 @@ let editingId=null;
 let guestSel = {}; // 分享页访客勾选: {index: qty}
 let guestInitKey = null; // 记录已初始化的邀请链接编码
 let currentInvite = null; // 当前打开的邀请数据
+let sharePicking = false; // 是否处于「菜谱选菜分享」模式
+let sharePick = {};       // 菜谱分享勾选: {recipeId: qty}
 
 function safeSet(key, val){
   try{ localStorage.setItem(key, val); return true; }
@@ -988,6 +1022,34 @@ function matchStateTag(r){
  * ============================================================ */
 function dishCard(r, opts){
   opts=opts||{};
+  if(opts.pick){
+    const sel=sharePick[r.id]!==undefined;
+    const qty=sharePick[r.id]||1;
+    const stepsHtml = r.steps ? '<button class="steps-toggle" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>做法（'+splitList(r.steps).length+'步）<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button>'
+      +'<div class="steps-box"><ol>'+splitList(r.steps).map(s=>'<li>'+esc(s)+'</li>').join('')+'</ol></div>' : '';
+    const qtyCtrl = sel ? '<span class="qty">'
+      +'<button type="button" data-pk="'+esc(r.id)+'" data-d="-1" aria-label="减份数"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></svg></button>'
+      +'<span>'+qty+'</span>'
+      +'<button type="button" data-pk="'+esc(r.id)+'" data-d="1" aria-label="加份数"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></span>' : '';
+    return '<article class="card dish-card '+(sel?'guest-on':'guest-off')+'" data-id="'+esc(r.id)+'">'
+      +'<button class="guest-check" data-pick="'+esc(r.id)+'" type="button" aria-label="勾选">'+I.check+'</button>'
+      +imgTag(r.img,r.name)
+      +'<div class="dish-body">'
+      +  '<div class="dish-title-row"><h3 class="dish-name">'+esc(r.name)+'</h3>'+qtyCtrl+'</div>'
+      +  '<div class="dish-tags">'
+      +    '<span class="sticker blue">'+esc(r.category)+'</span>'
+      +    '<span class="sticker '+(DIFF_COLOR[r.difficulty]||'green')+'">'+esc(r.difficulty)+'</span>'
+      +    '<span class="sticker purple">'+esc(r.duration||0)+'分钟</span>'
+      +    splitList(r.taste).slice(0,3).map(t=>'<span class="sticker orange">'+esc(t)+'</span>').join('')
+      +  '</div>'
+      +  '<div class="dish-ing">食材：'+esc(splitList(r.ingredients).slice(0,5).join('、')+(splitList(r.ingredients).length>5?' 等':''))+'</div>'
+      +  stepsHtml
+      +  '<div class="dish-actions">'
+      +    '<button class="btn small ghost icon-only" data-action="edit" type="button" title="编辑">'+I.pencil+'</button>'
+      +    '<button class="btn small ghost icon-only" data-action="del" type="button" title="删除">'+I.trash+'</button>'
+      +  '</div>'
+      +'</div></article>';
+  }
   const inCart=!!cartOf(r.id);
   const qty=inCart?cartOf(r.id).qty:0;
   const stepsHtml = r.steps ? '<button class="steps-toggle" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>做法（'+splitList(r.steps).length+'步）<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button>'
@@ -1162,8 +1224,30 @@ function renderRecipes(){
     document.getElementById('recipeEmptyText').textContent=q?'没找到和「'+recipeSearch+'」相关的菜，换个词试试。':'手账里还没有菜，点「记一道菜」写下第一道拿手菜吧。';
   }else{
     empty.style.display='none';
-    grid.innerHTML=list.map(r=>dishCard(r)).join('');
+    grid.innerHTML=list.map(r=>dishCard(r, sharePicking?{pick:true}:{})).join('');
   }
+  updateSharePickBar();
+}
+
+/* 菜谱分享：选菜模式 */
+function openSharePick(){
+  if(!recipes.length){ toast('菜谱库是空的，先记几道菜'); return; }
+  sharePicking=true; sharePick={};
+  renderRecipes();
+  document.getElementById('sharePickBar').classList.add('show');
+  toast('从菜谱里勾选要分享的菜，可调份数');
+}
+function exitSharePick(){
+  sharePicking=false; sharePick={};
+  renderRecipes();
+  document.getElementById('sharePickBar').classList.remove('show');
+}
+function updateSharePickBar(){
+  const bar=document.getElementById('sharePickBar');
+  if(!bar) return;
+  const n=Object.keys(sharePick).length;
+  document.getElementById('sharePickCount').textContent=n;
+  document.getElementById('btnGenInvite').classList.toggle('disabled', n===0);
 }
 
 /* ============================================================
@@ -1252,14 +1336,19 @@ function enc(data){ return btoa(unescape(encodeURIComponent(JSON.stringify(data)
 function dec(s){ return JSON.parse(decodeURIComponent(escape(atob(s)))); }
 function shareBase(){ return location.href.split('#')[0]; }
 
+function httpImgOnly(u){ return (u && /^https?:/i.test(u)) ? u : ''; }
 function buildInviteData(){
-  return cartDishes().map(d=>({n:d.r.name,c:d.r.category,dur:d.r.duration||0,taste:d.r.taste||'',img:d.r.img||'',qty:d.qty}));
+  // 从菜谱勾选（sharePick）构建邀请数据
+  return Object.keys(sharePick).map(id=>{
+    const r=byId(id); if(!r) return null;
+    return {n:r.name,c:r.category,dur:r.duration||0,taste:r.taste||'',img:httpImgOnly(r.img),qty:sharePick[id]};
+  }).filter(Boolean);
 }
 
 function openShareModal(kind){
   if(kind==='invite'){
     const data=buildInviteData();
-    if(!data.length){ toast('今日菜单是空的，先点几道菜再分享'); return; }
+    if(!data.length){ toast('先勾选几道菜再分享'); return; }
     let url;
     try{ url=shareBase()+'#/share?t=invite&m='+encodeURIComponent(enc(data)); }
     catch(e){ info('生成链接失败', '菜单内容无法编码，请减少几道菜再试。'); return; }
@@ -1272,7 +1361,7 @@ function openShareModal(kind){
     const items=Object.keys(guestSel).map(k=>{
       const idx=parseInt(k,10);
       const item=currentInvite[idx]; if(!item) return null;
-      return {n:item.n,c:item.c,img:item.img||'',qty:guestSel[k]};
+      return {n:item.n,c:item.c,img:httpImgOnly(item.img),qty:guestSel[k]};
     }).filter(Boolean);
     if(!items.length){ toast('先勾选至少一道菜，再生成回传链接'); return; }
     let url;
@@ -1437,6 +1526,7 @@ function openForm(id){
   document.getElementById('f-steps').value=r?(r.steps||''):'';
   document.getElementById('f-img').value=r?(r.img||''):'';
   renderPresets(r?r.img:'');
+  if(r&&r.img&&/^data:image/i.test(r.img)) showUploadPreview(r.img); else hideUploadPreview();
   document.getElementById('recipeModal').classList.add('open');
   document.getElementById('f-name').focus();
 }
@@ -1446,6 +1536,47 @@ function renderPresets(selected){
   box.innerHTML=Object.entries(IMG).map(([k,url])=>
     '<button type="button" data-img="'+url+'" class="'+(selected===url?'selected':'')+'" title="选这张图"><span>菜</span><img src="'+url+'" alt="" loading="lazy" onerror="this.style.display=\'none\'"></button>'
   ).join('');
+}
+function compressImage(img, maxSide, quality){
+  const w=img.naturalWidth||img.width, h=img.naturalHeight||img.height;
+  const scale=Math.min(1, maxSide/Math.max(w,h||1));
+  const cw=Math.max(1,Math.round(w*scale)), ch=Math.max(1,Math.round(h*scale));
+  const cv=document.createElement('canvas'); cv.width=cw; cv.height=ch;
+  const ctx=cv.getContext('2d'); ctx.drawImage(img,0,0,cw,ch);
+  return cv.toDataURL('image/jpeg', quality);
+}
+function showUploadPreview(data){
+  document.getElementById('uploadPreviewImg').src=data;
+  document.getElementById('uploadPreview').style.display='flex';
+}
+function hideUploadPreview(){
+  document.getElementById('uploadPreview').style.display='none';
+  document.getElementById('uploadPreviewImg').removeAttribute('src');
+}
+function handleImgUpload(e){
+  const file=e.target.files&&e.target.files[0];
+  e.target.value='';
+  if(!file) return;
+  if(!/^image\//i.test(file.type)){ toast('请选择图片文件'); return; }
+  if(file.size>12*1024*1024){ toast('图片太大，请选 12MB 以内的'); return; }
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const im=new Image();
+    im.onload=()=>{
+      let data;
+      try{ data=compressImage(im,900,0.8); }catch(err){ toast('图片处理失败'); return; }
+      const est=JSON.stringify(recipes).length+data.length;
+      if(est>4.6*1024*1024){ toast('本地存储快满了，这张图可能存不下，请删一些旧菜或换张小的'); return; }
+      document.getElementById('f-img').value=data;
+      showUploadPreview(data);
+      document.querySelectorAll('#presetImgs button').forEach(b=>b.classList.remove('selected'));
+      toast('图片已就位');
+    };
+    im.onerror=()=>toast('图片读取失败，换个文件试试');
+    im.src=reader.result;
+  };
+  reader.onerror=()=>toast('读取文件失败');
+  reader.readAsDataURL(file);
 }
 function saveForm(e){
   e.preventDefault();
@@ -1565,6 +1696,26 @@ document.addEventListener('click', (e)=>{
     document.getElementById('f-img').value=url;
     document.querySelectorAll('#presetImgs button').forEach(b=>b.classList.remove('selected'));
     preset.classList.add('selected');
+    hideUploadPreview();
+    return;
+  }
+
+  // 菜谱分享选菜勾选
+  const pk=t.closest('[data-pick]');
+  if(pk){
+    const id=pk.getAttribute('data-pick');
+    if(sharePick[id]!==undefined){ delete sharePick[id]; }
+    else{ sharePick[id]=1; }
+    renderRecipes();
+    return;
+  }
+  const pkk=t.closest('[data-pk]');
+  if(pkk){
+    const id=pkk.getAttribute('data-pk');
+    const d=parseInt(pkk.getAttribute('data-d'),10);
+    if(sharePick[id]===undefined) sharePick[id]=1;
+    sharePick[id]=Math.max(1,Math.min(20,(sharePick[id]||1)+d));
+    renderRecipes();
     return;
   }
 
@@ -1590,10 +1741,17 @@ document.addEventListener('click', (e)=>{
 
 /* 顶部与固定按钮 */
 document.getElementById('btnSmart').addEventListener('click', smartPick);
-document.getElementById('btnInvite').addEventListener('click', ()=>openShareModal('invite'));
 document.getElementById('btnShopList').addEventListener('click', openShopModal);
 document.getElementById('btnGoRecipes').addEventListener('click', ()=>{ location.hash='#/recipes'; });
 document.getElementById('btnAddRecipe').addEventListener('click', ()=>openForm(null));
+document.getElementById('btnShareRecipes').addEventListener('click', openSharePick);
+document.getElementById('btnGenInvite').addEventListener('click', ()=>{
+  if(!Object.keys(sharePick).length){ toast('先勾选几道菜'); return; }
+  openShareModal('invite');
+});
+document.getElementById('btnExitSharePick').addEventListener('click', exitSharePick);
+document.getElementById('f-img-file').addEventListener('change', handleImgUpload);
+document.getElementById('btnRemoveUpload').addEventListener('click', ()=>{ document.getElementById('f-img').value=''; hideUploadPreview(); });
 document.getElementById('searchInput').addEventListener('input', (e)=>{ recipeSearch=e.target.value; renderRecipes(); });
 document.getElementById('dinerInput').addEventListener('change', (e)=>{
   let v=parseInt(e.target.value,10); if(isNaN(v)) v=3; v=Math.max(1,Math.min(30,v));
@@ -1612,7 +1770,6 @@ document.getElementById('cartFab').addEventListener('click', ()=>{ renderCartPan
 document.getElementById('cartClose').addEventListener('click', ()=>document.getElementById('cartOverlay').classList.remove('open'));
 document.getElementById('cartOverlay').addEventListener('click', (e)=>{ if(e.target===document.getElementById('cartOverlay')) document.getElementById('cartOverlay').classList.remove('open'); });
 document.getElementById('btnCartClear').addEventListener('click', clearCart);
-document.getElementById('btnShareFromCart').addEventListener('click', ()=>openShareModal('invite'));
 document.getElementById('btnShopFromCart').addEventListener('click', openShopModal);
 
 /* 弹层 */
@@ -1623,7 +1780,7 @@ document.getElementById('shareModalClose').addEventListener('click', ()=>documen
 document.getElementById('btnCopyLink').addEventListener('click', async ()=>{
   const input=document.getElementById('shareLinkInput');
   const ok=await copyText(input.value);
-  if(ok){ toast('链接已复制'); document.getElementById('shareModal').classList.remove('open'); }
+  if(ok){ toast('链接已复制'); document.getElementById('shareModal').classList.remove('open'); if(sharePicking) exitSharePick(); }
   else{ input.select(); info('复制失败','请长按输入框手动复制链接。'); }
 });
 document.getElementById('shopModalClose').addEventListener('click', ()=>document.getElementById('shopModal').classList.remove('open'));
