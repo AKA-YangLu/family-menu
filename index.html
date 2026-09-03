@@ -614,6 +614,7 @@ main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
 <!-- 菜谱分享选菜浮动条 -->
 <div class="share-pick-bar" id="sharePickBar">
   <span>已选 <b id="sharePickCount">0</b> 道</span>
+  <button class="btn" id="btnSelectAll" type="button">全选</button>
   <button class="btn primary" id="btnGenInvite" type="button">生成分享链接</button>
   <button class="btn ghost" id="btnExitSharePick" type="button">退出</button>
 </div>
@@ -796,7 +797,31 @@ const IMG = {
   qiezi:'https://aka.doubaocdn.com/s/cpEnwQgZWZ',
   pihuang:'https://aka.doubaocdn.com/s/fcmCuuvUwU',
   donggua:'https://aka.doubaocdn.com/s/xDUxXO3mhe',
-  danchaofan:'https://aka.doubaocdn.com/s/h5KE3mBnPh'
+  danchaofan:'https://aka.doubaocdn.com/s/h5KE3mBnPh',
+  huiguorou:'https://aka.doubaocdn.com/s/OUwjvsa0qL',
+  shuizhuroupian:'https://aka.doubaocdn.com/s/2ebk4adUlw',
+  laziji:'https://aka.doubaocdn.com/s/M5qLUUKO2e',
+  jianjiaoji:'https://aka.doubaocdn.com/s/MBy3z8poBM',
+  suancaiyu:'https://aka.doubaocdn.com/s/KsckzkkEjb',
+  shuizhuyu:'https://aka.doubaocdn.com/s/iqUyp4TcFK',
+  suannibairou:'https://aka.doubaocdn.com/s/MWTVfAuOXk',
+  koushuiji:'https://aka.doubaocdn.com/s/TuLotNmcup',
+  yuxiangqiezi:'https://aka.doubaocdn.com/s/zhusP8VbFB',
+  hupiqingjiao:'https://aka.doubaocdn.com/s/L028vHISTh',
+  ganbiansijidou:'https://aka.doubaocdn.com/s/HjkXWXM6Xr',
+  qiangchaoyuancai:'https://aka.doubaocdn.com/s/V1dVHagDEJ',
+  ganguohuacai:'https://aka.doubaocdn.com/s/9NG2BwhgND',
+  suanluobolaoyatang:'https://aka.doubaocdn.com/s/W4UpYAYU5I',
+  fanqiewanzitang:'https://aka.doubaocdn.com/s/HnFDLHrb0l',
+  shanyaopaigutang:'https://aka.doubaocdn.com/s/ISRHifgLd8',
+  baicaidoufutang:'https://aka.doubaocdn.com/s/IV3O6vpRoU',
+  chongqingxiaomian:'https://aka.doubaocdn.com/s/oc1XvYhEUt',
+  dandanmian:'https://aka.doubaocdn.com/s/Ljciebm9Oj',
+  yibinranmian:'https://aka.doubaocdn.com/s/PbYrvRvhgI',
+  douhuafan:'https://aka.doubaocdn.com/s/hNWBUIB508',
+  suanlafen:'https://aka.doubaocdn.com/s/EVWaF1r3Sq',
+  liangbanzheergen:'https://aka.doubaocdn.com/s/eU3kVWAyde',
+  fuqifeipian:'https://aka.doubaocdn.com/s/VOYXffSuVN'
 };
 
 const DEFAULT_RECIPES = [
@@ -847,13 +872,110 @@ const DEFAULT_RECIPES = [
   {id:'r12', name:'蛋炒饭', category:'主食', difficulty:'简单', duration:15, taste:'咸鲜、蛋香',
    ingredients:'隔夜米饭、鸡蛋、胡萝卜、火腿、葱花、盐、生抽',
    steps:'1. 鸡蛋打散，胡萝卜火腿切小丁。\n2. 热油炒蛋至半熟盛出。\n3. 下胡萝卜丁火腿丁炒香。\n4. 下米饭大火翻炒打散。\n5. 倒回鸡蛋，加盐生抽，撒葱花。',
-   img:IMG.danchaofan}
+   img:IMG.danchaofan},
+  {id:'r13', name:'回锅肉', category:'荤菜', difficulty:'中等', duration:30, taste:'咸鲜、微辣、酱香',
+   ingredients:'五花肉、郫县豆瓣酱、蒜苗、青椒、姜、料酒、生抽、白糖',
+   steps:'1. 五花肉冷水下锅，加姜片料酒煮20分钟至八成熟，捞出晾凉切薄片。\n2. 蒜苗斜切段，青椒切块备用。\n3. 热锅少油，下肉片中火煸炒，逼出油脂至肉片微卷成灯盏窝。\n4. 拨开肉片，下豆瓣酱炒出红油，加姜片炒香。\n5. 下青椒蒜苗段大火翻炒，加生抽白糖调味。\n6. 炒至蒜苗断生出锅，肥而不腻、咸香微辣。',
+   img:IMG.huiguorou},
+  {id:'r14', name:'水煮肉片', category:'荤菜', difficulty:'困难', duration:40, taste:'麻辣、咸鲜',
+   ingredients:'猪里脊、豆芽、莴笋、郫县豆瓣酱、干辣椒、花椒、蒜末、姜、蛋清、淀粉、料酒、盐、生抽',
+   steps:'1. 里脊切薄片，加盐、料酒、蛋清、淀粉抓匀腌15分钟。\n2. 豆芽莴笋焯水垫入大碗底。\n3. 热油下豆瓣酱炒出红油，加姜蒜爆香，加开水煮开成汤底，加生抽调味。\n4. 肉片逐片下锅滑散，煮至变白立刻连汤倒入碗中。\n5. 肉片上铺干辣椒段、花椒、蒜末，淋一大勺滚烫热油激香。\n6. 撒葱花，麻辣鲜香、肉片滑嫩。',
+   img:IMG.shuizhuroupian},
+  {id:'r15', name:'辣子鸡', category:'荤菜', difficulty:'困难', duration:40, taste:'麻辣、干香',
+   ingredients:'鸡腿肉、干辣椒、花椒、姜、蒜、葱、料酒、生抽、盐、白糖、白芝麻',
+   steps:'1. 鸡腿去骨切小块，加料酒、生抽、盐腌20分钟。\n2. 干辣椒剪段，用清水略泡防炒糊。\n3. 油温六成热，下鸡丁炸至金黄酥脆捞出，复炸一次更脆。\n4. 留底油，下姜蒜、花椒、干辣椒段小火炒出香味。\n5. 倒回鸡丁大火翻炒，加白糖调味，裹匀辣椒花椒。\n6. 撒白芝麻和葱花出锅，外酥里嫩、麻辣干香。',
+   img:IMG.laziji},
+  {id:'r16', name:'尖椒鸡', category:'荤菜', difficulty:'中等', duration:30, taste:'鲜辣、嫩滑',
+   ingredients:'鸡腿肉、青尖椒、红椒、姜、蒜、花椒、料酒、生抽、盐、淀粉',
+   steps:'1. 鸡腿去骨切小丁，加料酒、生抽、淀粉抓匀腌15分钟。\n2. 青红尖椒切圈，姜蒜切末。\n3. 热油下鸡丁大火滑炒至变色盛出。\n4. 下姜蒜花椒爆香，倒入尖椒圈炒出辣香。\n5. 倒回鸡丁，加盐生抽大火翻炒均匀出锅，鲜辣嫩滑。',
+   img:IMG.jianjiaoji},
+  {id:'r17', name:'酸菜鱼', category:'荤菜', difficulty:'中等', duration:45, taste:'酸辣、鲜嫩',
+   ingredients:'草鱼或黑鱼、酸菜、泡椒、姜、蒜、葱、花椒、蛋清、淀粉、料酒、盐、白胡椒',
+   steps:'1. 鱼片片好，加盐、料酒、蛋清、淀粉抓匀腌15分钟；鱼骨斩块备用。\n2. 酸菜切段，热油下姜蒜泡椒爆香，下酸菜炒出香味。\n3. 下鱼骨煎香，加开水大火煮成奶白酸汤，加盐白胡椒调味。\n4. 捞出鱼骨酸菜铺碗底，留汤烧开。\n5. 鱼片逐片下锅，煮至变白立刻连汤倒入碗中。\n6. 撒葱花、花椒，淋热油激香，酸辣鲜美。',
+   img:IMG.suancaiyu},
+  {id:'r18', name:'水煮鱼', category:'荤菜', difficulty:'困难', duration:45, taste:'麻辣、滑嫩',
+   ingredients:'草鱼或黑鱼、豆芽、郫县豆瓣酱、干辣椒、花椒、蒜末、姜、蛋清、淀粉、料酒、盐',
+   steps:'1. 鱼片加盐、料酒、蛋清、淀粉腌15分钟；鱼骨斩块。\n2. 豆芽焯水垫碗底。\n3. 热油炒豆瓣酱出红油，加姜蒜、鱼骨煎香，加水煮开滤渣成红汤。\n4. 鱼片逐片下锅滑散，煮至变白连汤倒入碗中。\n5. 铺干辣椒、花椒、蒜末，淋滚油激香。\n6. 撒葱花，麻辣鲜香、鱼片滑嫩。',
+   img:IMG.shuizhuyu},
+  {id:'r19', name:'蒜泥白肉', category:'荤菜', difficulty:'简单', duration:35, taste:'蒜香、红油、咸鲜',
+   ingredients:'五花肉、蒜、姜、葱、生抽、香醋、白糖、辣椒油、香油',
+   steps:'1. 五花肉冷水下锅，加姜葱料酒煮25分钟至熟透，捞出晾凉。\n2. 放凉后切成薄而均匀的肉片，码入盘中。\n3. 蒜捣成泥，加生抽、香醋、白糖、辣椒油、香油调成蒜泥汁。\n4. 蒜泥汁淋在肉片上，撒葱花点缀，蒜香浓郁、肥而不腻。',
+   img:IMG.suannibairou},
+  {id:'r20', name:'口水鸡', category:'荤菜', difficulty:'中等', duration:40, taste:'麻辣、咸鲜',
+   ingredients:'鸡腿或三黄鸡、姜、葱、蒜、花椒、辣椒油、生抽、香醋、白糖、花生碎、白芝麻',
+   steps:'1. 鸡腿冷水下锅，加姜葱料酒煮15分钟，关火焖10分钟。\n2. 捞出立即浸入冰水，使鸡皮爽脆。\n3. 拆件斩块摆盘。\n4. 调红油汁：蒜末、生抽、香醋、白糖、辣椒油、花椒油拌匀。\n5. 红油汁淋在鸡肉上，撒花生碎、白芝麻、葱花，麻辣鲜香。',
+   img:IMG.koushuiji},
+  {id:'r21', name:'鱼香茄子', category:'素菜', difficulty:'中等', duration:30, taste:'咸甜、微辣、蒜香',
+   ingredients:'茄子、蒜、姜、葱、郫县豆瓣酱、生抽、香醋、白糖、淀粉',
+   steps:'1. 茄子切长条，撒盐腌10分钟挤干水分。\n2. 调鱼香汁：生抽、香醋、白糖、淀粉、清水拌匀。\n3. 茄子煎至软糯金黄盛出。\n4. 爆香豆瓣酱、姜蒜末，下茄子翻炒。\n5. 倒入鱼香汁大火收汁，撒葱花出锅，咸甜微辣。',
+   img:IMG.yuxiangqiezi},
+  {id:'r22', name:'虎皮青椒', category:'素菜', difficulty:'简单', duration:15, taste:'微辣、咸香',
+   ingredients:'青椒、蒜、生抽、香醋、白糖、盐、食用油',
+   steps:'1. 青椒去蒂洗净擦干。\n2. 热锅少油，下青椒中小火煎制，用锅铲按压。\n3. 煎至表面起皱成虎皮状，翻面再煎。\n4. 下蒜末炒香，淋生抽、香醋、白糖、盐调味。\n5. 稍收汁出锅，清香微辣、下饭神器。',
+   img:IMG.hupiqingjiao},
+  {id:'r23', name:'干煸四季豆', category:'素菜', difficulty:'中等', duration:25, taste:'麻辣、干香',
+   ingredients:'四季豆、肉末、干辣椒、花椒、蒜、姜、生抽、盐、白糖',
+   steps:'1. 四季豆撕去老筋，掰成段。\n2. 油温六成热，下四季豆煸至表皮起皱微黄，捞出控油。\n3. 留底油炒香肉末，加姜蒜、干辣椒、花椒炒香。\n4. 倒回四季豆，加生抽、盐、白糖大火翻炒。\n5. 炒至干香入味出锅，麻辣干香、爽脆可口。',
+   img:IMG.ganbiansijidou},
+  {id:'r24', name:'炝炒圆白菜', category:'素菜', difficulty:'简单', duration:10, taste:'爽脆、微辣',
+   ingredients:'圆白菜、干辣椒、蒜、花椒、生抽、香醋、盐',
+   steps:'1. 圆白菜手撕成大片，洗净沥干。\n2. 热油爆香干辣椒、花椒、蒜片。\n3. 下圆白菜大火快炒，边缘略焦。\n4. 淋生抽、香醋，加盐翻炒均匀。\n5. 断生立刻出锅，爽脆酸辣。',
+   img:IMG.qiangchaoyuancai},
+  {id:'r25', name:'干锅花菜', category:'素菜', difficulty:'中等', duration:30, taste:'干香、微辣',
+   ingredients:'有机花菜、五花肉、干辣椒、洋葱、蒜、姜、生抽、盐、白糖',
+   steps:'1. 花菜掰小朵，盐水泡洗，焯水30秒捞出。\n2. 五花肉切薄片，洋葱切块，干辣椒剪段。\n3. 热锅下五花肉煸出油，加姜蒜、干辣椒炒香。\n4. 下洋葱、花菜大火翻炒，加生抽、盐、白糖调味。\n5. 炒至花菜微焦出香，转入干锅，干香入味。',
+   img:IMG.ganguohuacai},
+  {id:'r26', name:'酸萝卜老鸭汤', category:'汤品', difficulty:'困难', duration:120, taste:'酸香、鲜浓',
+   ingredients:'老鸭、酸萝卜、姜、葱、料酒、花椒、枸杞、盐',
+   steps:'1. 老鸭斩块，冷水下锅加料酒焯水去腥，洗净。\n2. 酸萝卜切块，清水浸泡10分钟去咸味。\n3. 砂锅加水，下鸭块、姜片、葱结、花椒，大火烧开。\n4. 撇去浮沫，转小火炖60分钟。\n5. 下酸萝卜再炖40分钟，加盐调味。\n6. 出锅前撒枸杞，酸香开胃、汤鲜浓郁。',
+   img:IMG.suanluobolaoyatang},
+  {id:'r27', name:'番茄丸子汤', category:'汤品', difficulty:'简单', duration:40, taste:'酸甜、鲜香',
+   ingredients:'猪肉末、番茄、鸡蛋、姜、葱、淀粉、盐、白胡椒、生抽',
+   steps:'1. 肉末加姜末、蛋清、淀粉、盐、白胡椒搅打上劲。\n2. 番茄切块，热油炒出沙。\n3. 加开水煮开成番茄汤底，加盐调味。\n4. 肉馅挤成丸子，逐个下锅。\n5. 煮至丸子浮起变白，撒葱花出锅，酸甜开胃。',
+   img:IMG.fanqiewanzitang},
+  {id:'r28', name:'山药排骨汤', category:'汤品', difficulty:'简单', duration:90, taste:'清甜、滋补',
+   ingredients:'排骨、山药、姜、葱、料酒、枸杞、盐',
+   steps:'1. 排骨冷水下锅焯水，捞出洗净。\n2. 砂锅加水，下排骨、姜片、葱结、料酒，大火烧开转小火炖50分钟。\n3. 山药去皮切段，下锅再炖25分钟。\n4. 加盐调味，撒枸杞葱花，清甜滋补。',
+   img:IMG.shanyaopaigutang},
+  {id:'r29', name:'白菜豆腐汤', category:'汤品', difficulty:'简单', duration:20, taste:'清淡、鲜甜',
+   ingredients:'白菜、嫩豆腐、姜、葱、盐、白胡椒、香油',
+   steps:'1. 白菜切段，豆腐切块。\n2. 锅中加水或高汤，下姜片煮开。\n3. 下豆腐块煮5分钟，再下白菜煮3分钟。\n4. 加盐、白胡椒调味，淋香油撒葱花，清爽鲜甜。',
+   img:IMG.baicaidoufutang},
+  {id:'r30', name:'重庆小面', category:'主食', difficulty:'中等', duration:30, taste:'麻辣、咸鲜',
+   ingredients:'碱水面条、油辣子、花椒粉、蒜、姜、葱、酱油、醋、猪油、豌豆、青菜',
+   steps:'1. 调碗底：蒜姜末、油辣子、花椒粉、酱油、醋、猪油、葱花拌匀。\n2. 锅中水开下面条，煮至断生。\n3. 舀一勺面汤冲开碗底料。\n4. 面条捞入碗中，放烫好的青菜和煮好的豌豆。\n5. 撒葱花，麻辣鲜香、劲道十足。',
+   img:IMG.chongqingxiaomian},
+  {id:'r31', name:'担担面', category:'主食', difficulty:'中等', duration:30, taste:'麻辣、干香',
+   ingredients:'细面条、猪肉末、碎米芽菜、花生碎、芝麻酱、油辣子、花椒粉、蒜、生抽、白糖、葱花',
+   steps:'1. 肉末炒至干香，下碎米芽菜炒出香味成臊子。\n2. 调酱汁：芝麻酱、油辣子、花椒粉、生抽、白糖、蒜末拌匀。\n3. 面条煮熟捞出沥干，拌入酱汁。\n4. 铺肉臊、花生碎，撒葱花。\n5. 吃前拌匀，麻辣干香、咸鲜适口。',
+   img:IMG.dandanmian},
+  {id:'r32', name:'宜宾燃面', category:'主食', difficulty:'中等', duration:30, taste:'麻辣、劲道',
+   ingredients:'水面、碎米芽菜、花生碎、油辣子、花椒面、葱花、芝麻、酱油、猪油',
+   steps:'1. 面条煮至刚断生，捞出甩干水。\n2. 趁热拌入猪油、油辣子、花椒面、酱油。\n3. 铺碎米芽菜、花生碎、芝麻，撒葱花。\n4. 快速拌匀，让每根面裹满红油，麻辣劲道。',
+   img:IMG.yibinranmian},
+  {id:'r33', name:'豆花饭', category:'主食', difficulty:'简单', duration:30, taste:'豆香、微辣',
+   ingredients:'嫩豆花、米饭、辣椒油、蒜、姜、葱花、生抽、香醋、花椒粉',
+   steps:'1. 嫩豆花蒸热或水煮保温。\n2. 调蘸碟：辣椒油、蒜末、姜末、生抽、香醋、花椒粉、葱花拌匀。\n3. 米饭盛碗。\n4. 豆花配蘸碟，一口豆花一口饭，豆香浓郁、麻辣开胃。',
+   img:IMG.douhuafan},
+  {id:'r34', name:'酸辣粉', category:'小吃', difficulty:'中等', duration:30, taste:'酸辣、爽滑',
+   ingredients:'红薯粉、花生、豌豆、肉末、油辣子、花椒粉、醋、生抽、蒜、葱、香菜',
+   steps:'1. 红薯粉温水泡软。\n2. 调碗底：蒜末、油辣子、花椒粉、醋、生抽、葱花。\n3. 水开下粉条煮至透明。\n4. 连汤倒入碗中，铺炒好的肉末、花生、豌豆。\n5. 撒香菜葱花，酸辣爽滑。',
+   img:IMG.suanlafen},
+  {id:'r35', name:'凉拌折耳根', category:'小吃', difficulty:'简单', duration:15, taste:'酸辣、爽脆',
+   ingredients:'折耳根、蒜、姜、葱花、香菜、辣椒油、生抽、香醋、白糖、盐、花椒粉',
+   steps:'1. 折耳根洗净切段，用盐腌5分钟。\n2. 蒜姜切末，加辣椒油、生抽、香醋、白糖、花椒粉调成料汁。\n3. 料汁倒入折耳根拌匀。\n4. 撒葱花香菜，冷藏10分钟更爽脆，酸辣开胃。',
+   img:IMG.liangbanzheergen},
+  {id:'r36', name:'夫妻肺片', category:'小吃', difficulty:'中等', duration:50, taste:'麻辣、鲜香',
+   ingredients:'牛肉、牛肚、牛舌、花生碎、辣椒油、花椒粉、蒜、生抽、香醋、白糖、白芝麻、香菜',
+   steps:'1. 牛肉牛杂卤熟，放凉切薄片。\n2. 调红油料汁：辣椒油、花椒粉、蒜末、生抽、香醋、白糖拌匀。\n3. 牛肉牛杂片码盘，浇上料汁。\n4. 撒花生碎、白芝麻、香菜，麻辣鲜香。',
+   img:IMG.fuqifeipian}
 ];
 
 const LS_RECIPES='fmenu:recipes:v2';
 const LS_CART='fmenu:cart:v2';
 const LS_DINER='fmenu:diner:v2';
 const LS_FRIDGE='fmenu:fridge:v2';
+const LS_SHOPCHECK='fmenu:shopcheck:v2';
 
 /* ============================================================
  * 状态与存储
@@ -862,6 +984,7 @@ let recipes = loadRecipes();
 let cart = loadCart();       // [{id, qty}]
 let dinerCount = loadDiner();
 let fridge = loadFridge();   // [string]
+let shopChecked = loadShopChecked(); // 采购清单勾选记忆 {ingredient: true}
 
 let recipeFilter='全部', recipeSearch='';
 let randCount=3, randCat='全部', randDiff='全部', randDur='全部';
@@ -896,6 +1019,11 @@ function loadFridge(){
   try{ const raw=localStorage.getItem(LS_FRIDGE); if(raw){ const a=JSON.parse(raw); if(Array.isArray(a)) return a.map(s=>String(s).trim()).filter(Boolean); } }catch(e){}
   return [];
 }
+function loadShopChecked(){
+  try{ const raw=localStorage.getItem(LS_SHOPCHECK); if(raw){ const a=JSON.parse(raw); if(a&&typeof a==='object') return a; } }catch(e){}
+  return {};
+}
+function saveShopChecked(){ safeSet(LS_SHOPCHECK, JSON.stringify(shopChecked)); }
 function saveAll(){ saveRecipes(); saveCart(); saveDiner(); saveFridge(); }
 function saveRecipes(){ safeSet(LS_RECIPES, JSON.stringify(recipes)); }
 function saveCart(){ safeSet(LS_CART, JSON.stringify(cart)); }
@@ -1175,14 +1303,18 @@ function renderCartPanel(){
   updateDinerTip();
 }
 
-/* 智能搭配：按人数荤素搭配 */
+/* 智能搭配：菜量=人数×1.2~1.5，荤菜约为素菜2倍 */
 function suggest(n){
-  if(n<=1)   return {total:2, meat:1, veg:1, soup:0, staple:0, extra:0};
-  if(n===2)  return {total:3, meat:1, veg:1, soup:1, staple:0, extra:0};
-  if(n<=3)   return {total:3, meat:1, veg:1, soup:0, staple:1, extra:0};
-  if(n<=4)   return {total:4, meat:2, veg:1, soup:0, staple:1, extra:0};
-  if(n<=6)   return {total:5, meat:2, veg:2, soup:0, staple:1, extra:0};
-  return {total:6, meat:2, veg:2, soup:1, staple:1, extra:0};
+  n=Math.max(1,Math.min(30,parseInt(n,10)||1));
+  const total=Math.max(2,Math.min(15,Math.round(n*1.35)));
+  const soup=n>=4?1:0;
+  const staple=n>=3?1:0;
+  const rest=total-soup-staple;
+  const meat=Math.max(1,Math.round(rest*2/3));
+  const veg=Math.max(1,Math.round(rest/3));
+  let extra=rest-meat-veg;
+  if(extra>0){ veg+=extra; extra=0; }
+  return {total,meat,veg,soup,staple,extra};
 }
 function smartPick(){
   if(!recipes.length){ toast('菜谱库是空的，先去记几道菜'); return; }
@@ -1352,7 +1484,7 @@ function openShareModal(kind){
     let url;
     try{ url=shareBase()+'#/share?t=invite&m='+encodeURIComponent(enc(data)); }
     catch(e){ info('生成链接失败', '菜单内容无法编码，请减少几道菜再试。'); return; }
-    if(url.length>8000){ info('链接太长了','这道菜单内容有点多（'+data.length+'道），建议减少到 5 道以内再分享，否则微信可能打不开。'); return; }
+    if(url.length>12000){ info('链接太长了','这道菜单内容有点多（'+data.length+'道），建议分批分享，否则微信可能打不开。'); return; }
     document.getElementById('shareModalTitle').textContent='分享给家人点菜';
     document.getElementById('shareModalNote').textContent='对方打开这条链接，可以在这套菜单基础上勾选、增减份数，然后回传给你。';
     document.getElementById('shareLinkInput').value=url;
@@ -1367,7 +1499,7 @@ function openShareModal(kind){
     let url;
     try{ url=shareBase()+'#/share?t=result&m='+encodeURIComponent(enc(items)); }
     catch(e){ info('生成回传链接失败','内容无法编码，请减少菜品再试。'); return; }
-    if(url.length>8000){ info('回传链接太长了','勾选的菜有点多，建议精简后再回传。'); return; }
+    if(url.length>12000){ info('回传链接太长了','勾选的菜有点多，建议精简后再回传。'); return; }
     document.getElementById('shareModalTitle').textContent='回传给主人';
     document.getElementById('shareModalNote').textContent='复制这条链接，用微信发给邀请你的家人，对方点开就能看到你点好的菜。';
     document.getElementById('shareLinkInput').value=url;
@@ -1500,14 +1632,15 @@ function openShopModal(){
   }else{
     empty.style.display='none';
     box.innerHTML=list.map(x=>
-      '<label><input type="checkbox" data-ing="'+esc(x.ing)+'"><span>'+esc(x.ing)+'</span>'
+      '<label><input type="checkbox" data-ing="'+esc(x.ing)+'" '+(shopChecked[x.ing]?'checked':'')+'><span>'+esc(x.ing)+'</span>'
       +'<span class="cnt">'+x.cnt+' 道菜用到</span></label>'
     ).join('');
   }
   document.getElementById('shopModal').classList.add('open');
 }
 function shopText(){
-  return buildShopList().map(x=>'[ ] '+x.ing).join('\n');
+  // 只复制还没勾掉（没买）的食材
+  return buildShopList().filter(x=>!shopChecked[x.ing]).map(x=>'[ ] '+x.ing).join('\n');
 }
 
 /* ============================================================
@@ -1685,6 +1818,15 @@ document.addEventListener('click', (e)=>{
     return;
   }
 
+  // 采购清单勾选记忆
+  const shopChk=t.closest('#shopList input[data-ing]');
+  if(shopChk){
+    const ing=shopChk.getAttribute('data-ing');
+    if(shopChk.checked) shopChecked[ing]=true; else delete shopChecked[ing];
+    saveShopChecked();
+    return;
+  }
+
   // 步骤折叠
   const st=t.closest('.steps-toggle');
   if(st){ st.classList.toggle('open'); const box=st.nextElementSibling; if(box) box.classList.toggle('open'); return; }
@@ -1750,6 +1892,12 @@ document.getElementById('btnGenInvite').addEventListener('click', ()=>{
   openShareModal('invite');
 });
 document.getElementById('btnExitSharePick').addEventListener('click', exitSharePick);
+document.getElementById('btnSelectAll').addEventListener('click', ()=>{
+  if(!recipes.length){ toast('菜谱库是空的'); return; }
+  recipes.forEach(r=>{ sharePick[r.id]=1; });
+  renderRecipes();
+  toast('已全选 '+recipes.length+' 道，点「生成分享链接」发出去');
+});
 document.getElementById('f-img-file').addEventListener('change', handleImgUpload);
 document.getElementById('btnRemoveUpload').addEventListener('click', ()=>{ document.getElementById('f-img').value=''; hideUploadPreview(); });
 document.getElementById('searchInput').addEventListener('input', (e)=>{ recipeSearch=e.target.value; renderRecipes(); });
