@@ -192,7 +192,8 @@ main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
 .steps-box li{margin:3px 0;}
 
 /* ============ 空态 ============ */
-.empty-state{text-align:center;color:var(--ink-soft);padding:48px 16px;font-size:15px;}
+.empty-state{text-align:center;color:var(--ink-soft);padding:40px 16px;font-size:15px;}
+.empty-state .dog-empty{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--yellow-soft);margin-bottom:10px;background:#fff;}
 .empty-state svg{width:46px;height:46px;opacity:.5;margin-bottom:6px;}
 .empty-state .btn{margin-top:14px;}
 
@@ -266,6 +267,11 @@ main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
 .rand-result .section-label{font-size:20px;display:flex;align-items:center;gap:8px;margin:0 0 12px;}
 .shake{animation:shake .5s ease;}
 @keyframes shake{0%,100%{transform:translateX(0) rotate(0);}20%{transform:translateX(-7px) rotate(-2deg);}40%{transform:translateX(7px) rotate(2deg);}60%{transform:translateX(-5px) rotate(-1deg);}80%{transform:translateX(5px) rotate(1deg);}}
+
+/* ============ 底部小狗footer ============ */
+.dog-footer{text-align:center;padding:30px 16px 50px;margin-top:10px;}
+.dog-footer-img{width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid var(--yellow-soft);box-shadow:0 3px 10px rgba(74,55,40,.15);background:#fff;}
+.dog-footer-text{margin:10px 0 0;font-family:'ZCOOL KuaiLe','YouYuan','幼圆',cursive;color:var(--ink-soft);font-size:13px;letter-spacing:2px;}
 
 /* ============ 悬浮购物车 ============ */
 .cart-fab{
@@ -495,6 +501,7 @@ body.mode-guest{padding-bottom:24px;}
       </div>
       <div id="todayList" class="today-list"></div>
       <div class="empty-state" id="todayEmpty" style="display:none;">
+        <img src="https://aka.doubaocdn.com/s/o7CxeY3AWE" class="dog-empty" alt="柒柒">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
         <p>今天的菜单还空着。<br>去菜谱库挑几道，或让「智能搭配」帮你出主意。</p>
         <button class="btn primary" id="btnGoRecipes">去菜谱库看看</button>
@@ -521,7 +528,7 @@ body.mode-guest{padding-bottom:24px;}
       </button>
     </div>
     <div class="backup-row">
-      <span class="note" style="opacity:.72;">v7.0 · 112 道菜 · 柒柒家的小食堂</span>
+      <span class="note" style="opacity:.72;">v7.1 · 122 道菜 · 柒柒家的小食堂</span>
     </div>
     <div class="chips" style="margin-bottom:4px;gap:10px;">
       <div class="chips" id="catFilter"></div>
@@ -532,7 +539,8 @@ body.mode-guest{padding-bottom:24px;}
     </div>
     <div id="recipeGrid" class="dish-grid"></div>
     <div class="empty-state" id="recipeEmpty" style="display:none;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <img src="https://aka.doubaocdn.com/s/o7CxeY3AWE" class="dog-empty" alt="柒柒">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
       <p id="recipeEmptyText">手账里还没有菜，点「记一道菜」写下第一道拿手菜吧。</p>
     </div>
   </section>
@@ -579,7 +587,8 @@ body.mode-guest{padding-bottom:24px;}
         </div>
         <div id="matchGrid" class="dish-grid"></div>
         <div class="empty-state" id="matchEmpty" style="display:none;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 10h16"/></svg>
+        <img src="https://aka.doubaocdn.com/s/o7CxeY3AWE" class="dog-empty" alt="柒柒">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 10h16"/></svg>
           <p>先在左边录入冰箱食材，<br>这里会告诉你能做什么菜。</p>
         </div>
       </div>
@@ -619,11 +628,18 @@ body.mode-guest{padding-bottom:24px;}
     <div id="shareList" class="dish-grid"></div>
     <div id="shareActions" class="share-actions"></div>
     <div class="empty-state" id="shareEmpty" style="display:none;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+        <img src="https://aka.doubaocdn.com/s/o7CxeY3AWE" class="dog-empty" alt="柒柒">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
       <p>链接里没有菜单数据，<br>可能是链接不完整或已失效。</p>
     </div>
   </section>
 </main>
+
+<!-- ============ 底部小狗footer ============ -->
+<footer class="dog-footer">
+  <img src="https://aka.doubaocdn.com/s/8XvAEvbEcQ" class="dog-footer-img" alt="柒柒">
+  <p class="dog-footer-text">柒柒陪你好好吃饭 · 柒柒家的小食堂</p>
+</footer>
 
 <!-- ============ 悬浮购物车 ============ -->
 <button class="cart-fab" id="cartFab" title="今日菜单">
@@ -931,7 +947,17 @@ const IMG = {
   wandoujiandantang:'https://aka.doubaocdn.com/s/3WOUb9EwLZ',
   shuizhubocai:'https://aka.doubaocdn.com/s/b0bNag1HWV',
   wandoupianlajirou:'https://aka.doubaocdn.com/s/7uBOlgtMmb',
-  shuizhuxiangchang:'https://aka.doubaocdn.com/s/q2TM5sU7ir'
+  shuizhuxiangchang:'https://aka.doubaocdn.com/s/q2TM5sU7ir',
+  huojimian:'https://aka.doubaocdn.com/s/V1S8pHhu9M',
+  yimian:'https://aka.doubaocdn.com/s/iBmjL1rfvS',
+  luosifen:'https://aka.doubaocdn.com/s/nUNMgplmUO',
+  hongshaoniuroumian:'https://aka.doubaocdn.com/s/oyAaJNgSy0',
+  chongqingxiaomian:'https://aka.doubaocdn.com/s/DDvMsurqoT',
+  reganganmian:'https://aka.doubaocdn.com/s/AsqFT9JdRk',
+  suanlafen:'https://aka.doubaocdn.com/s/JL9Dagj8n4',
+  dandanmian:'https://aka.doubaocdn.com/s/KCadZGDiye',
+  congyoubanmian:'https://aka.doubaocdn.com/s/QZ15cVDUlG',
+  chaomian:'https://aka.doubaocdn.com/s/D1icniJJrB'
 };
 
 const DEFAULT_RECIPES = [
@@ -1382,7 +1408,35 @@ const DEFAULT_RECIPES = [
   {id:'r112', name:'水煮香肠', category:'荤菜', difficulty:'中等', duration:25, taste:'麻辣鲜香',
    ingredients:'川味香肠2根约200g、黄豆芽150g、莴笋100g、郫县豆瓣酱1.5勺、干辣椒10个、花椒1大勺、姜蒜末各1勺、生抽1勺、盐适量、白糖半勺、辣椒面1小勺、葱花适量、食用油适量',
    steps:'1. 香肠用温水洗净，切薄片（川味香肠本身有味道，选麻辣味的更好）；黄豆芽、莴笋片开水焯1分钟，垫在大盆底部。\n2. 热锅放油，下豆瓣酱、姜蒜末小火炒出红油，加清水500ml烧开，加生抽、盐、白糖调味，煮3分钟出味。\n3. 下香肠片，中小火煮3分钟入味（香肠本身是熟的，煮热入味即可）。\n4. 连汤倒入垫豆芽莴笋的大盆，表面铺干辣椒段、花椒、蒜末、辣椒面。\n5. 烧一勺热油（约80ml，烧到冒烟），淋在辣椒花椒上激出麻辣香味，撒葱花。\n关键：①川味香肠选麻辣味的，本身有味道，调料别太重；②香肠煮3分钟即可，别煮太久；③最后泼油是灵魂，油要烧到冒烟；④豆芽莴笋垫底吸汤汁。',
-   img:IMG.shuizhuxiangchang}
+   img:IMG.shuizhuxiangchang},
+  {id:'r113', name:'火鸡面', category:'主食', difficulty:'简单', duration:10, taste:'超辣过瘾',
+   ingredients:'韩式火鸡面1包、鸡蛋1个、芝麻少许、海苔碎少许、清水500ml',
+   steps:'1. 烧开水500ml，水开下面饼，煮4-5分钟至面条变软（喜欢有嚼劲的煮4分钟，喜欢软的煮5分钟）。\n2. 煮面同时煎个荷包蛋（不粘锅刷少许油，鸡蛋打入小火煎2分钟，蛋黄可留溏心）。\n3. 面条煮好后关火，留约2勺汤水（别把水全倒了，留一点拌面更顺滑）。\n4. 加入火鸡面酱料包（辣酱包全部，喜欢超辣的加，怕辣的先加一半试试），快速翻拌均匀。\n5. 撒上芝麻包、海苔碎，放上煎蛋，开吃！\n关键：①面汤别全倒，留2勺拌面更顺滑；②酱料按口味加，火鸡面很辣，怕辣先加一半；③配煎蛋和芝士片更解辣；④吃完可以喝牛奶解辣。',
+   img:IMG.huojimian},
+  {id:'r114', name:'番茄肉酱意面', category:'主食', difficulty:'中等', duration:25, taste:'酸甜浓郁',
+   ingredients:'意大利面150g、牛肉末150g、番茄2个约200g、洋葱半个、蒜3瓣、番茄酱2勺、生抽1勺、盐适量、黑胡椒少许、糖半勺、橄榄油适量、帕玛森芝士少许（可选）、罗勒叶少许（可选）',
+   steps:'1. 烧一大锅水，水开加一勺盐，下意面煮8-10分钟（包装时间减1分钟，al dente有嚼劲），捞出留一小碗面汤。\n2. 番茄顶部划十字，开水烫30秒去皮，切小丁；洋葱切小丁；蒜切末。\n3. 热锅放橄榄油，下洋葱丁小火炒3分钟至透明，加蒜末炒香。\n4. 加牛肉末，中火炒3分钟至变色散开，加番茄丁炒2分钟至出沙。\n5. 加番茄酱2勺、生抽、糖、盐、黑胡椒，加小半碗面汤，小火煮8分钟至酱汁浓稠（中途翻拌防糊底）。\n6. 倒入煮好的意面，翻拌1分钟让面条裹满酱汁，装盘撒帕玛森芝士和罗勒叶。\n关键：①意面煮到al dente（包装时间减1分钟），后面还要拌酱；②番茄炒出沙，酱汁才浓郁；③留面汤调酱汁浓度；④牛肉末要炒散，别结块。',
+   img:IMG.yimian},
+  {id:'r115', name:'螺蛳粉', category:'主食', difficulty:'简单', duration:15, taste:'酸辣鲜臭',
+   ingredients:'螺蛳粉1包、清水600ml、青菜2颗、鹌鹑蛋几个（可选）、腐竹花生（包内自带）',
+   steps:'1. 烧开水600ml，水开下干米粉，中火煮8-10分钟（用筷子能夹断即可，喜欢软的多煮2分钟），捞出过凉水（米粉更筋道）。\n2. 另起锅加清水500ml，放入螺蛳汤料包，大火烧开（汤料是灵魂，别舍不得放）。\n3. 汤开后下煮好的米粉、青菜，煮1分钟至青菜断生。\n4. 关火，连汤带粉倒入大碗，依次加入：酸笋包、腐竹花生包、酸豆角萝卜干包、辣油包（按口味加，怕辣少放）、醋包。\n5. 可以加煮好的鹌鹑蛋、卤蛋，或者煎个蛋，开吃！\n关键：①米粉先煮好过凉水，更筋道不粘；②汤料包要煮开，味道才出来；③酸笋是灵魂，别因为味道就不放；④辣油按口味加，很辣；⑤吃完通风，味道大。',
+   img:IMG.luosifen},
+  {id:'r116', name:'红烧牛肉面', category:'主食', difficulty:'中等', duration:90, taste:'浓郁鲜香',
+   ingredients:'牛腩300g、面条2人份、姜片3片、葱段2段、八角1个、桂皮1小块、香叶2片、生抽2勺、老抽1勺、料酒1勺、豆瓣酱1勺、冰糖5颗、盐适量、白胡椒粉少许、葱花适量、香菜适量、青菜2颗',
+   steps:'1. 牛腩切3cm方块，冷水下锅加料酒、姜片焯水，撇沫捞出冲净。\n2. 热锅放少许油，下冰糖小火炒出糖色（冰糖融化变琥珀色冒小泡），下牛腩翻炒上色。\n3. 加豆瓣酱、姜片、葱段、八角、桂皮、香叶炒香，烹生抽、老抽。\n4. 加开水没过牛腩（炖肉加开水，肉才嫩），大火烧开转小火炖60分钟（牛腩炖到用筷子能轻松戳透）。\n5. 加盐、白胡椒粉调味，继续炖10分钟入味。\n6. 烧开水下面条煮3分钟，捞出装碗，浇上红烧牛肉和汤汁，烫几颗青菜，撒葱花、香菜。\n关键：①牛腩要炖够时间，60分钟以上才软烂；②炒糖色是红烧的关键，小火别炒糊；③炖肉加开水，肉才嫩不柴；④面条单独煮，别和牛肉一起煮。',
+   img:IMG.hongshaoniuroumian},
+  {id:'r118', name:'热干面', category:'主食', difficulty:'简单', duration:15, taste:'芝麻酱香',
+   ingredients:'碱水面150g、芝麻酱2勺、香油1勺、生抽1勺、老抽半勺、醋半勺、盐少许、糖少许、萝卜丁1勺、酸豆角1勺、葱花2勺、蒜水1勺（蒜切末加凉开水）、辣椒油1勺（可选）',
+   steps:'1. 调芝麻酱：芝麻酱2勺加香油1勺，慢慢加凉开水（约3勺），朝一个方向搅打至顺滑流动状（澥芝麻酱是关键，太稠拌不开）。\n2. 烧开水，下碱水面煮2分钟（碱水面不要煮太久，保持筋道），捞出沥干，加少许香油拌匀防粘（可以摊开吹凉，热干面是拌面）。\n3. 调料汁：生抽、老抽、醋、盐、糖、蒜水搅匀。\n4. 面条装碗，淋上芝麻酱、调料汁，撒萝卜丁、酸豆角、葱花、辣椒油。\n5. 趁热快速拌匀（芝麻酱容易干，要趁热拌），开吃！\n关键：①芝麻酱要澥开，加香油和凉水搅打至顺滑；②碱水面别煮太软，保持筋道；③趁热拌，芝麻酱凉了会结块；④萝卜丁酸豆角是标配，增加口感。',
+   img:IMG.reganganmian},
+  {id:'r121', name:'葱油拌面', category:'主食', difficulty:'简单', duration:20, taste:'葱香浓郁',
+   ingredients:'鲜面条2人份、小葱6根约100g、生抽3勺、老抽1勺、白糖1勺、蚝油1勺、食用油4勺、开水2勺',
+   steps:'1. 熬葱油：小葱洗净切长段（葱白葱绿分开）；热锅放食用油4勺，小火下葱白段炸3分钟至微黄，再加葱绿段继续小火炸5分钟至葱变深褐色酥脆（全程小火，别炸糊），捞出葱段留葱油。\n2. 调酱汁：碗中放生抽3勺、老抽1勺、白糖1勺、蚝油1勺、开水2勺搅匀（酱汁提前调好，拌面更匀）。\n3. 烧开水下面条煮2-3分钟，捞出沥干（可以过一下温水，面条更筋道）。\n4. 面条装碗，淋上2勺葱油、调好的酱汁，撒上炸酥的葱段。\n5. 趁热拌匀开吃！（葱油和酱汁按口味加减）\n关键：①熬葱油全程小火，葱要炸到深褐色酥脆才香；②葱白先炸，葱绿后放；③酱汁提前调好，拌面更匀；④面条别煮太软，葱油拌面要筋道；⑤剩下的葱油可以拌面、拌菜，很香。',
+   img:IMG.congyoubanmian},
+  {id:'r122', name:'炒面', category:'主食', difficulty:'中等', duration:20, taste:'镬气十足',
+   ingredients:'鲜面条2人份、猪肉丝80g、豆芽100g、葱段2根、青尖椒1个、蒜2瓣、生抽2勺、老抽半勺、蚝油1勺、盐适量、白糖少许、料酒1勺、淀粉半勺、食用油适量',
+   steps:'1. 猪肉丝加料酒、生抽半勺、淀粉抓匀腌10分钟；豆芽洗净去根；葱段切寸段；青尖椒切丝；蒜切片。\n2. 烧开水下面条煮2分钟（面条煮八成熟，后面还要炒），捞出过凉水沥干，加少许香油拌匀防粘。\n3. 热锅宽油（油要多一点，炒面才不粘），下肉丝大火滑炒30秒至变色，盛出。\n4. 锅留底油，下蒜片爆香，加豆芽、青尖椒丝大火翻炒30秒至断生。\n5. 倒入面条，用筷子和铲子一起大火翻炒1分钟（炒面要用筷子抖散，别用铲子压），加生抽、老抽、蚝油、盐、白糖调味。\n6. 倒回肉丝，加葱段，大火翻炒30秒至葱段变软，出锅。\n关键：①面条煮八成熟，过凉水，炒出来才筋道不粘；②炒面油要多，火要大，才有镬气；③用筷子抖散面条，别用铲子压成一坨；④全程大火快炒，蔬菜保持脆嫩；⑤可以加鸡蛋、火腿肠、青菜。',
+   img:IMG.chaomian}
 ];
 
 const LS_RECIPES='fmenu:recipes:v2';
