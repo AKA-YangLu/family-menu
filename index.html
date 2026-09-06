@@ -1136,8 +1136,15 @@ function safeSet(key, val){
   }
 }
 function loadRecipes(){
-  try{ const raw=localStorage.getItem(LS_RECIPES); if(raw){ const a=JSON.parse(raw); if(Array.isArray(a)&&a.length) return a; } }catch(e){}
-  return DEFAULT_RECIPES.slice();
+  let local=null;
+  try{ const raw=localStorage.getItem(LS_RECIPES); if(raw){ const a=JSON.parse(raw); if(Array.isArray(a)&&a.length) local=a; } }catch(e){}
+  if(!local) return DEFAULT_RECIPES.slice();
+  // 合并新版预置菜：保留本地数据（含用户自定义菜和修改），把本地没有的预置菜补进去
+  const ids=new Set(local.map(r=>r.id));
+  let added=0;
+  DEFAULT_RECIPES.forEach(r=>{ if(!ids.has(r.id)){ local.push(r); added++; } });
+  if(added>0){ try{ localStorage.setItem(LS_RECIPES, JSON.stringify(local)); }catch(e){} }
+  return local;
 }
 function loadCart(){
   try{ const raw=localStorage.getItem(LS_CART); if(raw){ const a=JSON.parse(raw); if(Array.isArray(a)) return a.filter(x=>x&&x.id); } }catch(e){}
