@@ -32,6 +32,13 @@
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
+body::before{
+  content:'';position:fixed;top:0;left:0;right:0;bottom:0;
+  background-image:url('https://aka.doubaocdn.com/s/o7CxeY3AWE');
+  background-size:90px;background-repeat:repeat;
+  background-position:0 0;
+  opacity:.035;pointer-events:none;z-index:0;
+}
 body{
   font-family:'Noto Serif SC','Songti SC','STSong','SimSun',serif;
   color:var(--ink);
@@ -53,7 +60,7 @@ h1,h2,h3,h4{font-family:'Ma Shan Zheng','KaiTi','STKaiti','楷体',cursive;font-
 .brand-sub{margin:2px 0 0;font-family:'ZCOOL KuaiLe','YouYuan','幼圆',cursive;color:var(--ink-soft);font-size:14px;letter-spacing:4px;}
 .brand-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;}
 .brand-text{text-align:left;}
-.dog-logo{width:72px;height:72px;border-radius:50%;object-fit:cover;border:3px solid var(--yellow-soft);box-shadow:0 3px 10px rgba(74,55,40,.18);background:#fff;}
+.dog-logo{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid var(--yellow-soft);box-shadow:0 3px 10px rgba(74,55,40,.18);background:#fff;}
 .tape{
   position:absolute;top:-12px;left:50%;width:104px;height:26px;
   transform:translateX(-50%) rotate(-2deg);
@@ -68,6 +75,7 @@ h1,h2,h3,h4{font-family:'Ma Shan Zheng','KaiTi','STKaiti','楷体',cursive;font-
 .tab-bar{position:sticky;top:0;z-index:30;max-width:1080px;margin:0 auto;display:flex;gap:10px;justify-content:center;padding:8px 12px;}
 .tab-btn{
   display:inline-flex;align-items:center;gap:7px;
+  position:relative;
   font-family:'Ma Shan Zheng','KaiTi','STKaiti','楷体',cursive;font-size:18px;color:var(--ink);
   background:var(--card);border:2px solid var(--ink);
   border-radius:14px 6px 14px 6px / 6px 14px 6px 14px;
@@ -82,11 +90,14 @@ h1,h2,h3,h4{font-family:'Ma Shan Zheng','KaiTi','STKaiti','楷体',cursive;font-
 .tab-btn svg{width:18px;height:18px;flex:none;}
 .tab-btn:hover{transform:rotate(0) translateY(-1px);box-shadow:3px 5px 0 rgba(74,55,40,.15);}
 .tab-btn.active{background:var(--yellow-soft);box-shadow:2px 3px 0 rgba(74,55,40,.15);transform:rotate(0);}
+.tab-btn::before{
+  content:'🐾';font-size:14px;opacity:.55;margin-right:2px;
+}
 .tab-dot{position:absolute;top:-7px;right:-6px;min-width:20px;height:20px;border-radius:999px;background:var(--red);color:#FFF6EA;
   font-size:12px;font-family:'Noto Serif SC',serif;display:none;align-items:center;justify-content:center;padding:0 5px;}
 
 /* ============ 视图骨架 ============ */
-main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
+main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;;z-index:1;position:relative;}
 .view{display:none;}
 .view.active{display:block;animation:popIn .28s ease;}
 @keyframes popIn{from{opacity:0;transform:translateY(8px) rotate(.4deg);}to{opacity:1;transform:none;}}
@@ -162,9 +173,17 @@ main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
 
 /* ============ 菜品卡片 ============ */
 .dish-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px 20px;margin-top:18px;}
-.dish-card{padding:0;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s ease, box-shadow .15s ease;}
+.dish-card{padding:0;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s ease, box-shadow .15s ease;position:relative;}
 .dish-card:nth-child(odd){transform:rotate(-.35deg);}
 .dish-card:nth-child(even){transform:rotate(.3deg);}
+.dish-card::after{
+  content:'';position:absolute;top:6px;right:6px;
+  width:30px;height:30px;border-radius:50%;
+  background-image:url('https://aka.doubaocdn.com/s/o7CxeY3AWE');
+  background-size:cover;background-position:center;
+  border:2px solid #fff;box-shadow:0 2px 6px rgba(74,55,40,.25);
+  transform:rotate(12deg);z-index:2;
+}
 .dish-card:hover{transform:rotate(0) translateY(-3px);box-shadow:4px 7px 0 rgba(74,55,40,.14);}
 .dish-pic{position:relative;height:170px;overflow:hidden;border-bottom:2px solid var(--ink);background:var(--yellow-soft);display:flex;align-items:center;justify-content:center;}
 .dish-ph{font-family:'Ma Shan Zheng','KaiTi',cursive;font-size:56px;color:var(--ink-soft);}
@@ -528,7 +547,7 @@ body.mode-guest{padding-bottom:24px;}
       </button>
     </div>
     <div class="backup-row">
-      <span class="note" style="opacity:.72;">v7.1 · 119 道菜 · 柒柒家的小食堂</span>
+      <span class="note" style="opacity:.72;">v7.2 · 118 道菜 · 柒柒家的小食堂</span>
     </div>
     <div class="chips" style="margin-bottom:4px;gap:10px;">
       <div class="chips" id="catFilter"></div>
@@ -1429,10 +1448,6 @@ const DEFAULT_RECIPES = [
    ingredients:'碱水面150g、芝麻酱2勺、香油1勺、生抽1勺、老抽半勺、醋半勺、盐少许、糖少许、萝卜丁1勺、酸豆角1勺、葱花2勺、蒜水1勺（蒜切末加凉开水）、辣椒油1勺（可选）',
    steps:'1. 调芝麻酱：芝麻酱2勺加香油1勺，慢慢加凉开水（约3勺），朝一个方向搅打至顺滑流动状（澥芝麻酱是关键，太稠拌不开）。\n2. 烧开水，下碱水面煮2分钟（碱水面不要煮太久，保持筋道），捞出沥干，加少许香油拌匀防粘（可以摊开吹凉，热干面是拌面）。\n3. 调料汁：生抽、老抽、醋、盐、糖、蒜水搅匀。\n4. 面条装碗，淋上芝麻酱、调料汁，撒萝卜丁、酸豆角、葱花、辣椒油。\n5. 趁热快速拌匀（芝麻酱容易干，要趁热拌），开吃！\n关键：①芝麻酱要澥开，加香油和凉水搅打至顺滑；②碱水面别煮太软，保持筋道；③趁热拌，芝麻酱凉了会结块；④萝卜丁酸豆角是标配，增加口感。',
    img:IMG.reganganmian},
-  {id:'r121', name:'葱油拌面', category:'主食', difficulty:'简单', duration:20, taste:'葱香浓郁',
-   ingredients:'鲜面条2人份、小葱6根约100g、生抽3勺、老抽1勺、白糖1勺、蚝油1勺、食用油4勺、开水2勺',
-   steps:'1. 熬葱油：小葱洗净切长段（葱白葱绿分开）；热锅放食用油4勺，小火下葱白段炸3分钟至微黄，再加葱绿段继续小火炸5分钟至葱变深褐色酥脆（全程小火，别炸糊），捞出葱段留葱油。\n2. 调酱汁：碗中放生抽3勺、老抽1勺、白糖1勺、蚝油1勺、开水2勺搅匀（酱汁提前调好，拌面更匀）。\n3. 烧开水下面条煮2-3分钟，捞出沥干（可以过一下温水，面条更筋道）。\n4. 面条装碗，淋上2勺葱油、调好的酱汁，撒上炸酥的葱段。\n5. 趁热拌匀开吃！（葱油和酱汁按口味加减）\n关键：①熬葱油全程小火，葱要炸到深褐色酥脆才香；②葱白先炸，葱绿后放；③酱汁提前调好，拌面更匀；④面条别煮太软，葱油拌面要筋道；⑤剩下的葱油可以拌面、拌菜，很香。',
-   img:IMG.congyoubanmian},
   {id:'r122', name:'炒面', category:'主食', difficulty:'中等', duration:20, taste:'镬气十足',
    ingredients:'鲜面条2人份、猪肉丝80g、豆芽100g、葱段2根、青尖椒1个、蒜2瓣、生抽2勺、老抽半勺、蚝油1勺、盐适量、白糖少许、料酒1勺、淀粉半勺、食用油适量',
    steps:'1. 猪肉丝加料酒、生抽半勺、淀粉抓匀腌10分钟；豆芽洗净去根；葱段切寸段；青尖椒切丝；蒜切片。\n2. 烧开水下面条煮2分钟（面条煮八成熟，后面还要炒），捞出过凉水沥干，加少许香油拌匀防粘。\n3. 热锅宽油（油要多一点，炒面才不粘），下肉丝大火滑炒30秒至变色，盛出。\n4. 锅留底油，下蒜片爆香，加豆芽、青尖椒丝大火翻炒30秒至断生。\n5. 倒入面条，用筷子和铲子一起大火翻炒1分钟（炒面要用筷子抖散，别用铲子压），加生抽、老抽、蚝油、盐、白糖调味。\n6. 倒回肉丝，加葱段，大火翻炒30秒至葱段变软，出锅。\n关键：①面条煮八成熟，过凉水，炒出来才筋道不粘；②炒面油要多，火要大，才有镬气；③用筷子抖散面条，别用铲子压成一坨；④全程大火快炒，蔬菜保持脆嫩；⑤可以加鸡蛋、火腿肠、青菜。',
