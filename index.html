@@ -512,9 +512,7 @@ body.mode-guest{padding-bottom:24px;}
       </button>
     </div>
     <div class="backup-row">
-      <button class="btn small ghost" id="btnExportRecipes" type="button">导出菜谱</button>
-      <button class="btn small ghost" id="btnImportRecipes" type="button">导入菜谱</button>
-      <span class="note" style="margin-left:auto;opacity:.72;">v4.2 · 36道预置</span>
+      <span class="note" style="opacity:.72;">v5.0 · 60 道预置川渝家常菜 · 重口味</span>
     </div>
     <div class="chips" style="margin-bottom:4px;gap:10px;">
       <div class="chips" id="catFilter"></div>
@@ -788,18 +786,6 @@ body.mode-guest{padding-bottom:24px;}
 
 <div class="toast-wrap" id="toastWrap"></div>
 
-<!-- 迁移弹层：导出/导入菜谱 -->
-<div class="modal" id="transferModal">
-  <div class="modal-box confirm-box">
-    <h3 class="modal-title" id="transferTitle">导出菜谱</h3>
-    <p class="confirm-msg" id="transferMsg" style="font-size:13px;"></p>
-    <textarea id="transferText" rows="7" placeholder="粘贴导出内容…" style="width:100%;box-sizing:border-box;margin-bottom:10px;padding:10px;border-radius:10px;border:1.5px dashed #E7DEC7;background:#FFFCF2;color:#4A3728;font-family:inherit;font-size:13px;resize:vertical;min-height:110px;"></textarea>
-    <div class="confirm-actions">
-      <button class="btn ghost" id="transferCancel">算了</button>
-      <button class="btn primary" id="transferOk">复制导出内容</button>
-    </div>
-  </div>
-</div>
 
 <script>
 'use strict';
@@ -847,7 +833,31 @@ const IMG = {
   douhuafan:'https://aka.doubaocdn.com/s/hNWBUIB508',
   suanlafen:'https://aka.doubaocdn.com/s/EVWaF1r3Sq',
   liangbanzheergen:'https://aka.doubaocdn.com/s/eU3kVWAyde',
-  fuqifeipian:'https://aka.doubaocdn.com/s/VOYXffSuVN'
+  fuqifeipian:'https://aka.doubaocdn.com/s/VOYXffSuVN',
+  jiangxilajizhua:'https://aka.doubaocdn.com/s/S14gKEWkZu',
+  shuangjiaoji:'https://aka.doubaocdn.com/s/OmP7fRLBvy',
+  hongshaopaigu:'https://aka.doubaocdn.com/s/WB0FwyzoHO',
+  malaxiaolongxia:'https://aka.doubaocdn.com/s/Og0KWy9QRI',
+  ganguoji:'https://aka.doubaocdn.com/s/dKR0H6Zpz8',
+  ganguopaigu:'https://aka.doubaocdn.com/s/y9xrgMw86p',
+  ganguoniurou:'https://aka.doubaocdn.com/s/xXRcMp86ur',
+  ganguoxia:'https://aka.doubaocdn.com/s/7xT0c50fdV',
+  hongshaoniurou:'https://aka.doubaocdn.com/s/D1bsCf3fcw',
+  ziraniurou:'https://aka.doubaocdn.com/s/RTKLsCS26S',
+  shuizhuniurou:'https://aka.doubaocdn.com/s/8r8i3WgXCz',
+  maoxuewang:'https://aka.doubaocdn.com/s/rVaaFM1hiM',
+  lazifeichang:'https://aka.doubaocdn.com/s/YsguxOMVND',
+  xianglaxia:'https://aka.doubaocdn.com/s/Ri88seyTSO',
+  jianjiaotu:'https://aka.doubaocdn.com/s/2Uwo3dbtNp',
+  pijiaya:'https://aka.doubaocdn.com/s/g2ira91pTQ',
+  suanlajiza:'https://aka.doubaocdn.com/s/Pj6IxXjEtQ',
+  hongshaoyangrou:'https://aka.doubaocdn.com/s/owv8snL1re',
+  paojiaofengzhua:'https://aka.doubaocdn.com/s/Ce8UpKrFyR',
+  fenzhengrou:'https://aka.doubaocdn.com/s/EndcIprSXJ',
+  yangroushuazhuanfan:'https://aka.doubaocdn.com/s/E1dONF74wc',
+  luobuyangroutang:'https://aka.doubaocdn.com/s/CU2UmnMtFj',
+  ganguotudoupian:'https://aka.doubaocdn.com/s/uAtTb4UP69',
+  ganbianchashugu:'https://aka.doubaocdn.com/s/TM6MhFYJxX'
 };
 
 const DEFAULT_RECIPES = [
@@ -994,7 +1004,103 @@ const DEFAULT_RECIPES = [
   {id:'r36', name:'夫妻肺片', category:'小吃', difficulty:'中等', duration:50, taste:'麻辣、鲜香',
    ingredients:'牛肉、牛肚、牛舌、花生碎、辣椒油、花椒粉、蒜、生抽、香醋、白糖、白芝麻、香菜',
    steps:'1. 牛肉牛杂卤熟，放凉切薄片。\n2. 调红油料汁：辣椒油、花椒粉、蒜末、生抽、香醋、白糖拌匀。\n3. 牛肉牛杂片码盘，浇上料汁。\n4. 撒花生碎、白芝麻、香菜，麻辣鲜香。',
-   img:IMG.fuqifeipian}
+   img:IMG.fuqifeipian},
+  {id:'r37', name:'江西辣鸡爪', category:'荤菜', difficulty:'困难', duration:120, taste:'香辣浓郁',
+   ingredients:'鸡爪、八角、香叶、桂皮、生抽、蒜末、小米辣（红椒碎）、泡椒/榨菜末、葱段、辣椒面',
+   steps:'1. 处理鸡爪：鸡爪剪掉指甲，洗净。\n2. 焯水：鸡爪冷水下锅，开火煮沸，水开后撇去浮沫。\n3. 卤煮：锅中加入适量生抽（上色，也可不加），放入八角、香叶、桂皮，继续煮至鸡爪软糯入味（以鸡爪能用筷子轻松戳透为准）。\n4. 分离鸡爪和卤汁：捞出鸡爪装盘备用；将锅中的卤汁盛出，留一碗备用（这是后面回锅的关键）。\n5. 炒料：炒锅烧热倒入食用油，油热后放入蒜末、小米辣碎、泡椒末（或榨菜末），小火炒出香味和红油。\n6. 回锅翻炒：倒入煮好的鸡爪翻炒均匀，让每只鸡爪都裹上炒料。\n7. 加卤汁焖烧：倒入之前预留的卤汁，翻炒均匀，让鸡爪充分吸收卤汁，大火收汁。\n8. 放葱段出锅：放入葱段快速翻炒几下，出锅装盘。\n关键要点：①卤汁要留——最后回锅用的是煮鸡爪的原卤汁不是新调的酱汁，这是入味的关键；②辣椒要够——颜色寡淡是因为「辣椒少，酱汁没颜色」，想要红亮色泽要放够辣椒；③鸡爪不破皮——焯水后轻柔处理，翻炒时不要太猛。',
+   img:IMG.jiangxilajizhua},
+  {id:'r38', name:'双椒鸡', category:'荤菜', difficulty:'中等', duration:30, taste:'麻辣鲜香',
+   ingredients:'鸡腿肉、青尖椒、红尖椒、干辣椒、花椒、姜蒜、生抽、料酒、盐、糖、淀粉',
+   steps:'1. 鸡腿去骨切丁，加料酒、生抽、盐、淀粉抓匀腌 15 分钟。\n2. 青红尖椒切圈，姜蒜切片，干辣椒剪段。\n3. 热锅多油，下鸡丁滑炒至变色发白盛出。\n4. 锅内留底油，下姜蒜、干辣椒、花椒小火炒香。\n5. 倒入鸡丁大火翻炒，烹料酒、生抽、少许糖。\n6. 加入青红尖椒圈大火翻炒至断生，加盐调味出锅。\n关键：鸡丁先滑油才嫩；双椒最后放保持脆爽；花椒干辣椒小火出麻香。',
+   img:IMG.shuangjiaoji},
+  {id:'r39', name:'红烧排骨', category:'荤菜', difficulty:'中等', duration:60, taste:'咸甜适口',
+   ingredients:'肋排、冰糖、八角、桂皮、香叶、姜片、葱段、生抽、老抽、料酒、盐',
+   steps:'1. 排骨剁段冷水下锅，加料酒姜片焯水，撇沫捞出冲净。\n2. 锅放少许油，下冰糖小火炒出琥珀色糖色。\n3. 倒入排骨翻炒裹糖色，加姜葱、八角、桂皮、香叶炒香。\n4. 烹料酒、生抽、老抽上色，加热水没过排骨。\n5. 大火烧开转中小火炖 40 分钟至软烂。\n6. 大火收汁，加盐调味，撒葱花出锅。\n关键：糖色小火慢炒防苦；加热水炖肉更嫩；收汁时不停翻炒防糊。',
+   img:IMG.hongshaopaigu},
+  {id:'r40', name:'麻辣小龙虾', category:'荤菜', difficulty:'困难', duration:60, taste:'麻辣过瘾',
+   ingredients:'小龙虾、豆瓣酱、干辣椒、花椒、八角、桂皮、香叶、姜蒜、洋葱、啤酒、生抽、白糖、盐、香菜',
+   steps:'1. 小龙虾刷洗干净，剪去头部胃囊、抽虾线，沥干。\n2. 热锅宽油，油温七成下小龙虾炸至变红捞出。\n3. 锅留底油，下豆瓣酱炒出红油，加姜蒜、干辣椒、花椒、八角、桂皮、香叶炒香。\n4. 倒入小龙虾翻炒，烹料酒，加生抽、白糖。\n5. 倒入一整罐啤酒没过虾，大火烧开转中火焖 15 分钟。\n6. 加洋葱块、盐调味，大火收汁，撒香菜出锅。\n关键：虾线抽掉更干净；啤酒代替水去腥增香；留点汤汁蘸虾更够味。',
+   img:IMG.malaxiaolongxia},
+  {id:'r41', name:'干锅鸡', category:'荤菜', difficulty:'中等', duration:50, taste:'麻辣干香',
+   ingredients:'土鸡、土豆、洋葱、青红椒、干辣椒、花椒、姜蒜、豆瓣酱、生抽、料酒、盐、糖、香菜',
+   steps:'1. 鸡剁小块，加料酒、盐腌 20 分钟；土豆切条，青红椒切块，洋葱切块。\n2. 锅中多油，下土豆条炸至金黄捞出；鸡块下锅煸至表皮金黄微焦捞出。\n3. 锅留底油，下豆瓣酱炒出红油，加干辣椒、花椒、姜蒜炒香。\n4. 倒回鸡块和土豆翻炒，烹料酒、生抽、少许糖。\n5. 加入洋葱、青红椒大火翻炒断生，加盐调味。\n6. 转入干锅撒香菜，配小火炉边吃边加热。\n关键：鸡块要煸到干香才好吃；配菜随意换；全程大火快炒。',
+   img:IMG.ganguoji},
+  {id:'r42', name:'干锅排骨', category:'荤菜', difficulty:'中等', duration:50, taste:'麻辣干香',
+   ingredients:'排骨、藕、洋葱、青红椒、干辣椒、花椒、姜蒜、豆瓣酱、生抽、料酒、盐、糖、白芝麻、香菜',
+   steps:'1. 排骨焯水后加料酒、生抽、姜片煮 20 分钟至八成熟捞出。\n2. 藕切片，青红椒切块，洋葱切块，干辣椒剪段。\n3. 热油下藕片煎至边缘金黄盛出；排骨下锅煸至表面微焦。\n4. 锅留底油，豆瓣酱炒红油，加干辣椒、花椒、姜蒜炒香。\n5. 倒回排骨藕片翻炒，烹生抽、糖、盐调味。\n6. 加洋葱青红椒炒断生，撒白芝麻，转入干锅撒香菜上桌。\n关键：排骨先煮后煸更入味不柴；藕片煎香是灵魂。',
+   img:IMG.ganguopaigu},
+  {id:'r43', name:'干锅牛肉', category:'荤菜', difficulty:'中等', duration:40, taste:'麻辣鲜嫩',
+   ingredients:'牛里脊、芹菜、洋葱、青红椒、干辣椒、花椒、姜蒜、豆瓣酱、生抽、料酒、淀粉、蛋清、盐、糖',
+   steps:'1. 牛里脊逆纹切薄片，加生抽、料酒、淀粉、蛋清抓匀腌 15 分钟。\n2. 芹菜切段，洋葱切块，青红椒切块，姜蒜切片。\n3. 热锅宽油，下牛肉滑炒至变色立即盛出（保持嫩滑）。\n4. 锅留底油，豆瓣酱炒红油，加干辣椒、花椒、姜蒜炒香。\n5. 下芹菜洋葱青红椒大火翻炒半分钟。\n6. 倒回牛肉快速翻炒，加生抽、糖、盐调味，转入干锅上桌。\n关键：牛肉滑油时间短才嫩；配料先炒熟再回锅牛肉；全程大火。',
+   img:IMG.ganguoniurou},
+  {id:'r44', name:'干锅虾', category:'荤菜', difficulty:'中等', duration:40, taste:'麻辣酥香',
+   ingredients:'大虾、土豆、洋葱、青红椒、干辣椒、花椒、姜蒜、豆瓣酱、料酒、生抽、盐、糖、淀粉、香菜',
+   steps:'1. 大虾开背去虾线，加料酒、盐腌 10 分钟，拍薄淀粉。\n2. 土豆切条；锅中多油，下土豆条炸金黄捞出，再下虾炸至外壳酥脆捞出。\n3. 锅留底油，豆瓣酱炒红油，加干辣椒、花椒、姜蒜炒香。\n4. 倒回虾和土豆，烹料酒、生抽、糖、盐，大火翻炒。\n5. 加洋葱青红椒块炒断生，撒香菜，转入干锅上桌。\n关键：虾炸透壳酥可连壳吃；土豆条是绝配；火大才香。',
+   img:IMG.ganguoxia},
+  {id:'r45', name:'红烧牛肉', category:'荤菜', difficulty:'中等', duration:120, taste:'软烂浓香',
+   ingredients:'牛腩、白萝卜、姜片、葱段、八角、桂皮、香叶、干辣椒、冰糖、生抽、老抽、料酒、盐',
+   steps:'1. 牛腩切块冷水下锅，加料酒姜片焯水，撇沫捞出冲净。\n2. 锅放少许油炒冰糖至琥珀色，下牛腩翻炒上色。\n3. 加姜葱、八角、桂皮、香叶、干辣椒炒香，烹料酒。\n4. 加生抽、老抽，倒热水没过牛腩，大火烧开转小火炖 90 分钟。\n5. 加白萝卜块再炖 20 分钟至萝卜透明软糯。\n6. 大火收汁，加盐调味，撒葱花出锅。\n关键：牛腩选带筋的炖久更糯；热水一次加够中途不加水；萝卜后放不烂。',
+   img:IMG.hongshaoniurou},
+  {id:'r46', name:'孜然牛肉', category:'荤菜', difficulty:'中等', duration:25, taste:'孜然浓郁',
+   ingredients:'牛里脊、洋葱、孜然粒、孜然粉、辣椒粉、白芝麻、生抽、料酒、淀粉、盐、糖、香菜',
+   steps:'1. 牛里脊逆纹切薄片，加生抽、料酒、淀粉抓匀腌 15 分钟。\n2. 洋葱切丝，香菜切段。\n3. 热锅宽油，下牛肉滑炒至变色盛出。\n4. 锅留底油，下洋葱丝炒软出香。\n5. 倒回牛肉，加孜然粒、孜然粉、辣椒粉、白芝麻、盐、糖大火翻炒。\n6. 撒香菜段快速翻匀出锅。\n关键：孜然粒炒香再放粉更出味；牛肉别炒老；辣椒粉按口味增减。',
+   img:IMG.ziraniurou},
+  {id:'r47', name:'水煮牛肉', category:'荤菜', difficulty:'困难', duration:40, taste:'麻辣滚烫',
+   ingredients:'牛里脊、豆芽、莴笋、豆瓣酱、干辣椒、花椒、姜蒜末、蛋清、淀粉、生抽、料酒、盐、糖、辣椒面',
+   steps:'1. 牛里脊逆纹切薄片，加生抽、料酒、蛋清、淀粉抓匀腌 20 分钟。\n2. 豆芽莴笋焯水垫碗底。\n3. 锅放油，下豆瓣酱、姜蒜末炒出红油，加水烧开，加盐糖调味。\n4. 转小火下牛肉片，煮至变色即捞出铺在菜上。\n5. 汤再次烧开浇入碗中，表面铺干辣椒段、花椒、蒜末、辣椒面。\n6. 烧一勺热油淋在辣椒蒜末上激出香味，撒葱花出锅。\n关键：牛肉上浆要足才嫩；最后泼油是灵魂，油要烧到冒烟。',
+   img:IMG.shuizhuniurou},
+  {id:'r48', name:'毛血旺', category:'荤菜', difficulty:'困难', duration:40, taste:'麻辣霸道',
+   ingredients:'鸭血、毛肚、午餐肉、豆芽、莴笋、豆瓣酱、火锅底料、干辣椒、花椒、姜蒜、生抽、盐、糖、花椒粉',
+   steps:'1. 鸭血切块焯水去腥；毛肚切条；午餐肉切片；豆芽莴笋焯水垫盆底。\n2. 锅放油，下豆瓣酱和一小块火锅底料炒化，加姜蒜炒香。\n3. 加水烧开，加生抽、盐、糖调味，煮 5 分钟出味。\n4. 下鸭血、午餐肉煮 3 分钟，再下毛肚烫 30 秒。\n5. 全部倒入垫菜的大盆，表面铺干辣椒、花椒、蒜末。\n6. 烧热油泼上去，撒花椒粉和葱花上桌。\n关键：火锅底料是灵魂增香；毛肚最后烫不能久煮；油泼多才香。',
+   img:IMG.maoxuewang},
+  {id:'r49', name:'辣子肥肠', category:'荤菜', difficulty:'困难', duration:60, taste:'焦香麻辣',
+   ingredients:'肥肠、干辣椒、花椒、姜蒜、葱段、生抽、料酒、盐、糖、白芝麻、面粉',
+   steps:'1. 肥肠用面粉加盐反复搓洗去异味，翻面去油，冷水下锅加料酒姜片煮 40 分钟至软。\n2. 捞出切滚刀段，擦干水分。\n3. 干辣椒剪段（量要足），花椒备好，姜蒜切片。\n4. 热锅宽油，下肥肠段中火煸炒至表皮焦黄酥脆。\n5. 下姜蒜炒香，再下干辣椒花椒小火炒出麻辣香。\n6. 加生抽、糖、盐调味，撒白芝麻和葱段翻匀出锅。\n关键：肥肠要煸到焦脆才香；干辣椒花椒小火慢炒防糊；辣椒多于肥肠是特色。',
+   img:IMG.lazifeichang},
+  {id:'r50', name:'香辣虾', category:'荤菜', difficulty:'中等', duration:30, taste:'香辣入味',
+   ingredients:'大虾、干辣椒、花椒、姜蒜、豆瓣酱、料酒、生抽、盐、糖、淀粉、葱段',
+   steps:'1. 大虾开背去虾线，加料酒盐腌 10 分钟，拍薄淀粉。\n2. 热锅宽油，下虾炸至壳酥捞出。\n3. 锅留底油，下豆瓣酱炒红油，加姜蒜、干辣椒、花椒炒香。\n4. 倒回大虾大火翻炒，烹料酒、生抽、糖、盐。\n5. 加葱段快速翻匀出锅。\n关键：虾壳炸酥可带壳吃；料头炒香再下虾；大火快炒。',
+   img:IMG.xianglaxia},
+  {id:'r51', name:'尖椒兔', category:'荤菜', difficulty:'中等', duration:35, taste:'鲜辣麻香',
+   ingredients:'兔肉、青尖椒、小米辣、青花椒、姜蒜、泡椒、生抽、料酒、淀粉、盐、糖、香菜',
+   steps:'1. 兔肉剁小块，加料酒、生抽、淀粉抓匀腌 20 分钟。\n2. 青尖椒小米辣切圈，泡椒切末，姜蒜切片。\n3. 热锅宽油，下兔丁滑炒至变色盛出。\n4. 锅留底油，下姜蒜、泡椒末、青花椒炒香。\n5. 倒回兔丁，加生抽、糖、盐大火翻炒。\n6. 加尖椒圈炒至断生，撒香菜出锅。\n关键：兔肉嫩滑要快炒；青花椒给麻香量要足；泡椒提鲜。',
+   img:IMG.jianjiaotu},
+  {id:'r52', name:'啤酒鸭', category:'荤菜', difficulty:'中等', duration:60, taste:'酱香浓郁',
+   ingredients:'鸭腿、啤酒、姜片、蒜瓣、干辣椒、八角、桂皮、豆瓣酱、生抽、老抽、料酒、盐、糖、青红椒、葱段',
+   steps:'1. 鸭肉剁块冷水下锅加料酒姜片焯水，撇沫捞出冲净。\n2. 热锅少油，下鸭块煸炒至表皮微黄出油。\n3. 下豆瓣酱、姜蒜、干辣椒、八角、桂皮炒香，烹料酒。\n4. 加生抽、老抽、糖，倒入一整罐啤酒没过鸭肉。\n5. 大火烧开转中小火炖 35 分钟至鸭肉软烂。\n6. 加青红椒块、盐大火收汁，撒葱段出锅。\n关键：鸭肉先煸出油不腥；啤酒去腥增香量要够；收汁到浓稠挂汁。',
+   img:IMG.pijiaya},
+  {id:'r53', name:'酸辣鸡杂', category:'荤菜', difficulty:'中等', duration:25, taste:'酸辣开胃',
+   ingredients:'鸡胗、鸡心、泡椒、酸萝卜、姜蒜、青红椒、干辣椒、生抽、料酒、盐、糖、香芹',
+   steps:'1. 鸡杂洗净切片，加料酒、盐腌 10 分钟。\n2. 泡椒切段、酸萝卜切条，姜蒜切片，青红椒切圈。\n3. 热锅宽油，下鸡杂大火爆炒至变色盛出。\n4. 锅留底油，下姜蒜、泡椒、酸萝卜炒出酸香。\n5. 倒回鸡杂，加生抽、糖大火翻炒。\n6. 加青红椒圈、香芹段炒断生，盐调味出锅。\n关键：鸡杂要大火爆炒才脆嫩；泡椒酸萝卜是酸味来源；酸辣下饭。',
+   img:IMG.suanlajiza},
+  {id:'r54', name:'泡椒凤爪', category:'小吃', difficulty:'中等', duration:1440, taste:'酸辣爽脆',
+   ingredients:'鸡爪、泡椒、野山椒水、白醋、花椒、八角、姜片、盐、白糖、胡萝卜条',
+   steps:'1. 鸡爪剪指甲，冷水下锅加姜片、花椒、八角煮 10 分钟（别煮烂）。\n2. 捞出立刻过冰水，沥干（鸡爪脆的关键）。\n3. 泡椒连水倒入大碗，加白醋、盐、白糖、凉白开调成泡汁（尝着够酸够咸）。\n4. 放入鸡爪和胡萝卜条，确保汤汁没过。\n5. 密封冷藏 24 小时以上入味。\n6. 吃时捞出装盘。\n关键：过冰水才脆；泡汁酸甜咸要够味；冷藏越久越入味。',
+   img:IMG.paojiaofengzhua},
+  {id:'r55', name:'粉蒸肉', category:'家常菜', difficulty:'中等', duration:90, taste:'软糯咸香',
+   ingredients:'五花肉、蒸肉米粉、红薯、姜末、蒜末、豆瓣酱、生抽、料酒、糖、花椒粉、葱花',
+   steps:'1. 五花肉切厚片，加豆瓣酱、生抽、料酒、姜蒜末、糖、花椒粉抓匀腌 30 分钟。\n2. 倒入蒸肉米粉拌匀，让每片肉裹满米粉（太干可加少许水）。\n3. 红薯切滚刀块垫蒸碗底。\n4. 把肉片一片片铺在红薯上。\n5. 上蒸锅，大火烧开转中火蒸 60 分钟至肉烂米粉软糯。\n6. 出锅撒葱花（可再浇一勺热油激香）。\n关键：肉要腌入味再拌粉；米粉裹匀不干；蒸够时间才软糯。',
+   img:IMG.fenzhengrou},
+  {id:'r56', name:'羊肉手抓饭', category:'主食', difficulty:'中等', duration:60, taste:'油润咸香',
+   ingredients:'羊排、大米、胡萝卜、黄萝卜、洋葱、葡萄干、孜然粒、盐、食用油、清水',
+   steps:'1. 大米提前泡 30 分钟；羊肉切块，洋葱切丝，胡萝卜切粗条。\n2. 热锅多油，下洋葱丝中火炒至金黄出香。\n3. 下羊肉块煸炒至表面变色出油，加孜然粒、盐炒匀。\n4. 加胡萝卜条翻炒 2 分钟。\n5. 倒入泡好的大米铺平，加水没过米面约一指。\n6. 加盖小火焖 25 分钟，撒葡萄干再焖 5 分钟，拌匀出锅。\n关键：洋葱炒到焦香是基础味；水量刚好没过米；焖饭时别开盖。',
+   img:IMG.yangroushuazhuanfan},
+  {id:'r57', name:'红烧羊肉', category:'荤菜', difficulty:'中等', duration:120, taste:'软烂入味',
+   ingredients:'羊腿肉、胡萝卜、姜片、葱段、八角、桂皮、香叶、干辣椒、冰糖、生抽、老抽、料酒、盐',
+   steps:'1. 羊肉切块冷水下锅，加料酒姜片焯水（冷水下锅去膻），撇沫捞出。\n2. 锅放少许油炒冰糖至琥珀色，下羊肉翻炒上色。\n3. 加姜葱、八角、桂皮、香叶、干辣椒炒香，烹料酒。\n4. 加生抽、老抽，倒热水没过羊肉，大火烧开转小火炖 90 分钟。\n5. 加胡萝卜块再炖 20 分钟。\n6. 大火收汁，加盐调味，撒葱段出锅。\n关键：羊肉冷水下锅焯透去膻；香料足炖够时间；膻味重可加一小把花椒同炖。',
+   img:IMG.hongshaoyangrou},
+  {id:'r58', name:'萝卜羊肉汤', category:'汤品', difficulty:'中等', duration:90, taste:'清鲜暖胃',
+   ingredients:'羊腿肉、白萝卜、姜片、葱段、花椒、料酒、盐、白胡椒粉、香菜、葱花',
+   steps:'1. 羊肉切块冷水下锅，加料酒姜片焯水，撇沫捞出冲净。\n2. 羊肉入汤锅，加足量清水、姜片、葱段、一小撮花椒。\n3. 大火烧开转小火炖 60 分钟至汤色微白、羊肉软烂。\n4. 白萝卜去皮切块，入锅再炖 20 分钟至透明。\n5. 加盐、白胡椒粉调味。\n6. 撒香菜葱花出锅。\n关键：炖汤一次加够水；花椒去膻不夺鲜；萝卜后放保持清甜。',
+   img:IMG.luobuyangroutang},
+  {id:'r59', name:'干锅土豆片', category:'素菜', difficulty:'中等', duration:30, taste:'香辣焦香',
+   ingredients:'土豆、五花肉、洋葱、青红椒、干辣椒、花椒、姜蒜、豆瓣酱、生抽、盐、糖、白芝麻',
+   steps:'1. 土豆切厚片泡水去淀粉，擦干；五花肉切薄片。\n2. 热锅多油，下土豆片中火煎至两面金黄焦香盛出。\n3. 锅留底油，下五花肉片煸至出油微卷。\n4. 下豆瓣酱、姜蒜、干辣椒、花椒炒出红油。\n5. 倒回土豆片，加生抽、糖、盐大火翻炒。\n6. 加洋葱青红椒块炒断生，撒白芝麻，转干锅上桌。\n关键：土豆片煎到焦边才香；五花肉煸出油更香；土豆先煎后炒不碎。',
+   img:IMG.ganguotudoupian},
+  {id:'r60', name:'干煸茶树菇', category:'素菜', difficulty:'中等', duration:30, taste:'干香耐嚼',
+   ingredients:'茶树菇、五花肉丝、干辣椒、花椒、姜蒜、生抽、料酒、盐、糖、香芹段',
+   steps:'1. 茶树菇剪根撕成条，洗净攥干水分。\n2. 热锅不放油，下茶树菇干煸至水汽蒸发、微微卷曲盛出。\n3. 锅放油，下五花肉丝煸炒出油微焦。\n4. 下姜蒜、干辣椒、花椒炒香。\n5. 倒回茶树菇，烹料酒、生抽，加糖、盐大火翻炒。\n6. 加香芹段炒断生出锅。\n关键：茶树菇先干煸去水汽才香；五花肉丝增油香；全程中大火。',
+   img:IMG.ganbianchashugu}
 ];
 
 const LS_RECIPES='fmenu:recipes:v2';
@@ -1783,65 +1889,6 @@ function deleteRecipe(id){
 }
 
 /* ============================================================
- * 菜谱导出/导入（跨设备迁移，含自定义图片）
- * ============================================================ */
-let transferMode='export';
-function isCustomRecipe(r){
-  return !!(r&&(r.isCustom||!/^r\d{1,2}$/.test(r.id||'')));
-}
-function buildExportText(){
-  const custom=recipes.filter(isCustomRecipe);
-  return JSON.stringify({app:'fmenu-recipes',v:1,time:Date.now(),list:custom});
-}
-function openTransfer(mode){
-  transferMode=mode;
-  const title=document.getElementById('transferTitle');
-  const msg=document.getElementById('transferMsg');
-  const text=document.getElementById('transferText');
-  const ok=document.getElementById('transferOk');
-  if(mode==='export'){
-    title.textContent='导出菜谱';
-    msg.textContent='已把你添加的自定义菜（含图片）打包好，点「复制导出内容」发到微信文件传输助手，另一台设备打开后点「导入菜谱」粘贴即可。预置的 36 道不用导出，各设备自带。';
-    text.readOnly=true; text.value=buildExportText();
-    ok.textContent='复制导出内容';
-  }else{
-    title.textContent='导入菜谱';
-    msg.textContent='粘贴另一台设备导出的内容（含图片），点「导入」合并进本机菜谱；同菜名同分类会自动更新。';
-    text.readOnly=false; text.value='';
-    ok.textContent='导入';
-  }
-  document.getElementById('transferModal').classList.add('open');
-  if(mode==='export') text.focus();
-}
-function closeTransfer(){ document.getElementById('transferModal').classList.remove('open'); }
-function doExport(){
-  const custom=recipes.filter(isCustomRecipe);
-  if(!custom.length){ info('没有可导出的菜','预置菜每台设备都自带。只有你亲手添加的菜才会被打包带走。'); return; }
-  const text=buildExportText();
-  if(text.length>2.5*1024*1024){ info('内容太大','导出内容超过 2.5MB，微信可能收不下，建议先删减几道自定义菜。'); return; }
-  openTransfer('export');
-}
-function doImport(){
-  const raw=document.getElementById('transferText').value.trim();
-  if(!raw){ toast('先粘贴导出内容'); return; }
-  let payload;
-  try{ payload=JSON.parse(raw); }catch(e){ toast('内容格式不对，请完整复制导出文本'); return; }
-  if(!payload||payload.app!=='fmenu-recipes'||!Array.isArray(payload.list)||!payload.list.length){ toast('这不是有效的菜谱导出内容'); return; }
-  const valid=payload.list.filter(r=>r&&r.name&&r.category&&r.ingredients);
-  if(!valid.length){ toast('没有可导入的菜'); return; }
-  const est=JSON.stringify(recipes).length+raw.length;
-  if(est>4.8*1024*1024){ info('存储空间不够','导入后本机存储可能超限，建议先删一些旧菜或减少导入数量。'); return; }
-  let added=0, updated=0;
-  valid.forEach(c=>{
-    const existed=recipes.find(r=>r.name===c.name&&r.category===c.category);
-    if(existed){ Object.assign(existed,c,{id:existed.id,isCustom:true}); updated++; }
-    else{ recipes.push(Object.assign({},c,{id:uid(),isCustom:true})); added++; }
-  });
-  saveRecipes(); closeTransfer(); refreshAll();
-  info('导入完成','新增 '+added+' 道，更新 '+updated+' 道，图片已一起导入。');
-}
-
-/* ============================================================
  * 路由
  * ============================================================ */
 function router(){
@@ -1997,16 +2044,6 @@ document.getElementById('btnSelectAll').addEventListener('click', ()=>{
   recipes.forEach(r=>{ sharePick[r.id]=1; });
   renderRecipes();
   toast('已全选 '+recipes.length+' 道，点「生成分享链接」发出去');
-});
-document.getElementById('btnExportRecipes').addEventListener('click', doExport);
-document.getElementById('btnImportRecipes').addEventListener('click', ()=>{ openTransfer('import'); });
-document.getElementById('transferCancel').addEventListener('click', closeTransfer);
-document.getElementById('transferOk').addEventListener('click', async ()=>{
-  if(transferMode==='import'){ doImport(); return; }
-  const text=document.getElementById('transferText').value;
-  const ok=await copyText(text);
-  if(ok){ toast('导出内容已复制，去微信发给自己吧'); closeTransfer(); }
-  else{ const ta=document.getElementById('transferText'); ta.focus(); ta.select(); toast('复制失败，请长按文本手动复制'); }
 });
 document.getElementById('f-img-file').addEventListener('change', handleImgUpload);
 document.getElementById('btnRemoveUpload').addEventListener('click', ()=>{ document.getElementById('f-img').value=''; hideUploadPreview(); });
