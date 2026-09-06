@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>家庭菜单手账</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Serif+SC:wght@400;600;700&display=swap">
 <style>
 /* ============ 手账色板 ============ */
@@ -370,6 +372,8 @@ main{max-width:1080px;margin:0 auto;padding:10px 16px 40px;}
 .share-pick-bar .btn.primary{background:var(--red);border-color:var(--red);color:#FFF6EA;}
 .share-pick-bar .btn.ghost{background:transparent;color:#FFF6EA;border-color:#FFF6EA;}
 .share-pick-bar .btn.disabled{opacity:.45;pointer-events:none;}
+.backup-row{display:flex;gap:8px;align-items:center;margin:2px 0 10px;flex-wrap:wrap;}
+.backup-row .btn{padding:5px 12px;}
 /* 访客点菜模式：隐藏底部导航与悬浮购物车 */
 body.mode-guest .tab-bar{display:none;}
 body.mode-guest .cart-fab{display:none;}
@@ -506,6 +510,11 @@ body.mode-guest{padding-bottom:24px;}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
         记一道菜
       </button>
+    </div>
+    <div class="backup-row">
+      <button class="btn small ghost" id="btnExportRecipes" type="button">导出菜谱</button>
+      <button class="btn small ghost" id="btnImportRecipes" type="button">导入菜谱</button>
+      <span class="note" style="margin-left:auto;opacity:.72;">v4.2 · 36道预置</span>
     </div>
     <div class="chips" style="margin-bottom:4px;gap:10px;">
       <div class="chips" id="catFilter"></div>
@@ -778,6 +787,19 @@ body.mode-guest{padding-bottom:24px;}
 </div>
 
 <div class="toast-wrap" id="toastWrap"></div>
+
+<!-- 迁移弹层：导出/导入菜谱 -->
+<div class="modal" id="transferModal">
+  <div class="modal-box confirm-box">
+    <h3 class="modal-title" id="transferTitle">导出菜谱</h3>
+    <p class="confirm-msg" id="transferMsg" style="font-size:13px;"></p>
+    <textarea id="transferText" rows="7" placeholder="粘贴导出内容…" style="width:100%;box-sizing:border-box;margin-bottom:10px;padding:10px;border-radius:10px;border:1.5px dashed #E7DEC7;background:#FFFCF2;color:#4A3728;font-family:inherit;font-size:13px;resize:vertical;min-height:110px;"></textarea>
+    <div class="confirm-actions">
+      <button class="btn ghost" id="transferCancel">算了</button>
+      <button class="btn primary" id="transferOk">复制导出内容</button>
+    </div>
+  </div>
+</div>
 
 <script>
 'use strict';
@@ -1716,7 +1738,7 @@ function handleImgUpload(e){
     const im=new Image();
     im.onload=()=>{
       let data;
-      try{ data=compressImage(im,900,0.8); }catch(err){ toast('图片处理失败'); return; }
+      try{ data=compressImage(im,720,0.7); }catch(err){ toast('图片处理失败'); return; }
       const est=JSON.stringify(recipes).length+data.length;
       if(est>4.6*1024*1024){ toast('本地存储快满了，这张图可能存不下，请删一些旧菜或换张小的'); return; }
       document.getElementById('f-img').value=data;
@@ -1746,7 +1768,7 @@ function saveForm(e){
     toast('改好啦');
   }else{
     if(recipes.some(x=>x.name===name)){ toast('手账里已经有「'+name+'」了'); return; }
-    recipes.push({id:uid(),name,category,difficulty,duration,taste,ingredients,steps,img});
+    recipes.push({id:uid(),name,category,difficulty,duration,taste,ingredients,steps,img,isCustom:true});
     toast('「'+name+'」写进手账啦');
   }
   saveRecipes(); closeForm(); refreshAll();
@@ -1758,6 +1780,65 @@ function deleteRecipe(id){
     cart=cart.filter(x=>x.id!==id);
     saveRecipes(); saveCart(); refreshAll(); toast('已删除');
   });
+}
+
+/* ============================================================
+ * 菜谱导出/导入（跨设备迁移，含自定义图片）
+ * ============================================================ */
+let transferMode='export';
+function isCustomRecipe(r){
+  return !!(r&&(r.isCustom||!/^r\d{1,2}$/.test(r.id||'')));
+}
+function buildExportText(){
+  const custom=recipes.filter(isCustomRecipe);
+  return JSON.stringify({app:'fmenu-recipes',v:1,time:Date.now(),list:custom});
+}
+function openTransfer(mode){
+  transferMode=mode;
+  const title=document.getElementById('transferTitle');
+  const msg=document.getElementById('transferMsg');
+  const text=document.getElementById('transferText');
+  const ok=document.getElementById('transferOk');
+  if(mode==='export'){
+    title.textContent='导出菜谱';
+    msg.textContent='已把你添加的自定义菜（含图片）打包好，点「复制导出内容」发到微信文件传输助手，另一台设备打开后点「导入菜谱」粘贴即可。预置的 36 道不用导出，各设备自带。';
+    text.readOnly=true; text.value=buildExportText();
+    ok.textContent='复制导出内容';
+  }else{
+    title.textContent='导入菜谱';
+    msg.textContent='粘贴另一台设备导出的内容（含图片），点「导入」合并进本机菜谱；同菜名同分类会自动更新。';
+    text.readOnly=false; text.value='';
+    ok.textContent='导入';
+  }
+  document.getElementById('transferModal').classList.add('open');
+  if(mode==='export') text.focus();
+}
+function closeTransfer(){ document.getElementById('transferModal').classList.remove('open'); }
+function doExport(){
+  const custom=recipes.filter(isCustomRecipe);
+  if(!custom.length){ info('没有可导出的菜','预置菜每台设备都自带。只有你亲手添加的菜才会被打包带走。'); return; }
+  const text=buildExportText();
+  if(text.length>2.5*1024*1024){ info('内容太大','导出内容超过 2.5MB，微信可能收不下，建议先删减几道自定义菜。'); return; }
+  openTransfer('export');
+}
+function doImport(){
+  const raw=document.getElementById('transferText').value.trim();
+  if(!raw){ toast('先粘贴导出内容'); return; }
+  let payload;
+  try{ payload=JSON.parse(raw); }catch(e){ toast('内容格式不对，请完整复制导出文本'); return; }
+  if(!payload||payload.app!=='fmenu-recipes'||!Array.isArray(payload.list)||!payload.list.length){ toast('这不是有效的菜谱导出内容'); return; }
+  const valid=payload.list.filter(r=>r&&r.name&&r.category&&r.ingredients);
+  if(!valid.length){ toast('没有可导入的菜'); return; }
+  const est=JSON.stringify(recipes).length+raw.length;
+  if(est>4.8*1024*1024){ info('存储空间不够','导入后本机存储可能超限，建议先删一些旧菜或减少导入数量。'); return; }
+  let added=0, updated=0;
+  valid.forEach(c=>{
+    const existed=recipes.find(r=>r.name===c.name&&r.category===c.category);
+    if(existed){ Object.assign(existed,c,{id:existed.id,isCustom:true}); updated++; }
+    else{ recipes.push(Object.assign({},c,{id:uid(),isCustom:true})); added++; }
+  });
+  saveRecipes(); closeTransfer(); refreshAll();
+  info('导入完成','新增 '+added+' 道，更新 '+updated+' 道，图片已一起导入。');
 }
 
 /* ============================================================
@@ -1916,6 +1997,16 @@ document.getElementById('btnSelectAll').addEventListener('click', ()=>{
   recipes.forEach(r=>{ sharePick[r.id]=1; });
   renderRecipes();
   toast('已全选 '+recipes.length+' 道，点「生成分享链接」发出去');
+});
+document.getElementById('btnExportRecipes').addEventListener('click', doExport);
+document.getElementById('btnImportRecipes').addEventListener('click', ()=>{ openTransfer('import'); });
+document.getElementById('transferCancel').addEventListener('click', closeTransfer);
+document.getElementById('transferOk').addEventListener('click', async ()=>{
+  if(transferMode==='import'){ doImport(); return; }
+  const text=document.getElementById('transferText').value;
+  const ok=await copyText(text);
+  if(ok){ toast('导出内容已复制，去微信发给自己吧'); closeTransfer(); }
+  else{ const ta=document.getElementById('transferText'); ta.focus(); ta.select(); toast('复制失败，请长按文本手动复制'); }
 });
 document.getElementById('f-img-file').addEventListener('change', handleImgUpload);
 document.getElementById('btnRemoveUpload').addEventListener('click', ()=>{ document.getElementById('f-img').value=''; hideUploadPreview(); });
