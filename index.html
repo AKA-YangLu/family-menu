@@ -6,6 +6,7 @@
 <title>家庭菜单手账</title>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Serif+SC:wght@400;600;700&display=swap">
 <style>
 /* ============ 手账色板 ============ */
@@ -512,7 +513,7 @@ body.mode-guest{padding-bottom:24px;}
       </button>
     </div>
     <div class="backup-row">
-      <span class="note" style="opacity:.72;">v6.0 · 100 道川渝家常菜 · 重口味 · 详细做法</span>
+      <span class="note" style="opacity:.72;">v6.1 · 100 道川渝家常菜 · 重口味 · 详细做法</span>
     </div>
     <div class="chips" style="margin-bottom:4px;gap:10px;">
       <div class="chips" id="catFilter"></div>
@@ -706,7 +707,8 @@ body.mode-guest{padding-bottom:24px;}
         <textarea class="form-textarea" id="f-steps" maxlength="600" placeholder="1. 五花肉切块焯水&#10;2. 炒糖色后下肉翻炒…"></textarea>
       </div>
       <div class="form-field">
-        <label class="form-label">菜品图片</label>
+        <label class="form-label" id="imgToggleLabel" style="cursor:pointer;user-select:none;">菜品图片 <span id="imgToggleArrow" style="font-size:12px;">▸ 点击展开</span></label>
+        <div id="imgSection" style="display:none;margin-top:8px;">
         <div class="img-input-row">
           <input class="form-input" id="f-img" type="text" maxlength="300" placeholder="粘贴图片链接，或上传本地图片">
           <label class="btn small" for="f-img-file">上传图片</label>
@@ -716,6 +718,7 @@ body.mode-guest{padding-bottom:24px;}
         <div class="upload-preview" id="uploadPreview" style="display:none;">
           <img id="uploadPreviewImg" alt="已上传图片">
           <button type="button" class="btn small ghost" id="btnRemoveUpload">移除这张图</button>
+        </div>
         </div>
       </div>
       <div class="form-actions">
@@ -905,7 +908,10 @@ const IMG = {
   taianyu:'https://aka.doubaocdn.com/s/cDwuyWuU5n',
   youtingjiyu:'https://aka.doubaocdn.com/s/QmZkYFUcQl',
   huajiaoji:'https://aka.doubaocdn.com/s/jLiVAtDRM7',
-  guaiweiji:'https://aka.doubaocdn.com/s/YybkMwsrVI'
+  guaiweiji:'https://aka.doubaocdn.com/s/YybkMwsrVI',
+  tangcupaigu:'https://aka.doubaocdn.com/s/UjSkMBb5GE',
+  donggupaigutang:'https://aka.doubaocdn.com/s/2BalJWg06P',
+  jianjiaoji2:'https://aka.doubaocdn.com/s/tqVHWpHkLj'
 };
 
 const DEFAULT_RECIPES = [
@@ -1320,6 +1326,15 @@ const LS_SHOPCHECK='fmenu:shopcheck:v2';
 /* ============================================================
  * 状态与存储
  * ============================================================ */
+// 版本检查：版本变化时自动刷新，确保用户看到最新版
+const APP_VERSION='v6.1';
+try{
+  const savedVer=localStorage.getItem('fmenu:version');
+  if(savedVer!==APP_VERSION){
+    localStorage.setItem('fmenu:version', APP_VERSION);
+    if(savedVer){ location.reload(); }  // 非首次访问才刷新，避免新用户死循环
+  }
+}catch(e){}
 let recipes = loadRecipes();
 let cart = loadCart();       // [{id, qty}]
 let dinerCount = loadDiner();
@@ -2285,6 +2300,13 @@ document.getElementById('btnShopFromCart').addEventListener('click', openShopMod
 /* 弹层 */
 document.getElementById('modalClose').addEventListener('click', closeForm);
 document.getElementById('btnCancel').addEventListener('click', closeForm);
+// 编辑弹窗图片区域折叠/展开
+document.getElementById('imgToggleLabel').addEventListener('click', ()=>{
+  const sec=document.getElementById('imgSection');
+  const arrow=document.getElementById('imgToggleArrow');
+  if(sec.style.display==='none'){ sec.style.display='block'; arrow.textContent='▾ 点击收起'; }
+  else{ sec.style.display='none'; arrow.textContent='▸ 点击展开'; }
+});
 document.getElementById('recipeForm').addEventListener('submit', saveForm);
 document.getElementById('shareModalClose').addEventListener('click', ()=>document.getElementById('shareModal').classList.remove('open'));
 document.getElementById('btnCopyLink').addEventListener('click', async ()=>{
