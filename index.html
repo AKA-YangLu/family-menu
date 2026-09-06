@@ -63,13 +63,15 @@ h1,h2,h3,h4{font-family:'Ma Shan Zheng','KaiTi','STKaiti','楷体',cursive;font-
 .brand-text{text-align:left;}
 .dog-logo{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid var(--yellow-soft);box-shadow:0 3px 10px rgba(74,55,40,.18);background:#fff;}
 .tape{
-  position:absolute;top:-12px;left:50%;width:104px;height:26px;
-  transform:translateX(-50%) rotate(-2deg);
-  background:
-    repeating-linear-gradient(90deg, rgba(255,255,255,.28) 0 7px, transparent 7px 15px),
-    linear-gradient(180deg, rgba(229,185,76,.92), rgba(218,166,58,.78));
-  border-left:1px dashed rgba(255,255,255,.75);border-right:1px dashed rgba(255,255,255,.75);
-  box-shadow:0 1px 3px rgba(74,55,40,.12);opacity:.92;z-index:5;pointer-events:none;
+  position:absolute;top:-14px;left:50%;width:48px;height:48px;
+  transform:translateX(-50%) rotate(-8deg);
+  background:rgba(255,255,255,.85);
+  border-radius:50%;
+  border:2px dashed var(--pink);
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;
+  box-shadow:0 2px 8px rgba(240,168,184,.3);
+  z-index:2;
 }
 
 /* ============ 导航 ============ */
@@ -466,7 +468,7 @@ body.mode-guest{padding-bottom:24px;}
 
 <!-- ============ 手账头 ============ -->
 <header class="app-header">
-  <div class="tape"></div>
+  <div class="tape">🐾</div>
   <div class="brand-row">
     <img src="https://aka.doubaocdn.com/s/MN4MSjWZHp" class="dog-logo" alt="柒柒（西高地）">
     <div class="brand-text">
@@ -548,7 +550,7 @@ body.mode-guest{padding-bottom:24px;}
       </button>
     </div>
     <div class="backup-row">
-      <span class="note" style="opacity:.72;">v7.3 · 118 道菜 · 柒柒家的小食堂</span>
+      <span class="note" style="opacity:.72;">v7.4 · 118 道菜 · 柒柒家的小食堂</span>
     </div>
     <div class="chips" style="margin-bottom:4px;gap:10px;">
       <div class="chips" id="catFilter"></div>
@@ -858,7 +860,7 @@ const IMG = {
   donggua:'https://aka.doubaocdn.com/s/xDUxXO3mhe',
   danchaofan:'https://aka.doubaocdn.com/s/h5KE3mBnPh',
   huiguorou:'https://aka.doubaocdn.com/s/OUwjvsa0qL',
-  shuizhuroupian:'https://aka.doubaocdn.com/s/2ebk4adUlw',
+  shuizhuroupian:'https://aka.doubaocdn.com/s/st9KcMzfDF',
   laziji:'https://aka.doubaocdn.com/s/M5qLUUKO2e',
   jianjiaoji:'https://aka.doubaocdn.com/s/MBy3z8poBM',
   suancaiyu:'https://aka.doubaocdn.com/s/KsckzkkEjb',
@@ -871,16 +873,16 @@ const IMG = {
   qiangchaoyuancai:'https://aka.doubaocdn.com/s/V1dVHagDEJ',
   ganguohuacai:'https://aka.doubaocdn.com/s/9NG2BwhgND',
   suanluobolaoyatang:'https://aka.doubaocdn.com/s/W4UpYAYU5I',
-  fanqiewanzitang:'https://aka.doubaocdn.com/s/HnFDLHrb0l',
-  shanyaopaigutang:'https://aka.doubaocdn.com/s/ISRHifgLd8',
+  fanqiewanzitang:'https://aka.doubaocdn.com/s/7crCH3Uk1V',
+  shanyaopaigutang:'https://aka.doubaocdn.com/s/yxsXeicXQ4',
   baicaidoufutang:'https://aka.doubaocdn.com/s/IV3O6vpRoU',
-  chongqingxiaomian:'https://aka.doubaocdn.com/s/oc1XvYhEUt',
-  dandanmian:'https://aka.doubaocdn.com/s/Ljciebm9Oj',
-  yibinranmian:'https://aka.doubaocdn.com/s/PbYrvRvhgI',
+  chongqingxiaomian:'https://aka.doubaocdn.com/s/CjJ6mgdxnr',
+  dandanmian:'https://aka.doubaocdn.com/s/GTciFhITvw',
+  yibinranmian:'https://aka.doubaocdn.com/s/Pv7IQxmrZE',
   douhuafan:'https://aka.doubaocdn.com/s/hNWBUIB508',
-  suanlafen:'https://aka.doubaocdn.com/s/EVWaF1r3Sq',
-  liangbanzheergen:'https://aka.doubaocdn.com/s/eU3kVWAyde',
-  fuqifeipian:'https://aka.doubaocdn.com/s/VOYXffSuVN',
+  suanlafen:'https://aka.doubaocdn.com/s/VWwz3flkUZ',
+  liangbanzheergen:'https://aka.doubaocdn.com/s/B4LbrtCZbr',
+  fuqifeipian:'https://aka.doubaocdn.com/s/IWQVYzmZ8k',
   jiangxilajizhua:'https://aka.doubaocdn.com/s/S14gKEWkZu',
   shuangjiaoji:'https://aka.doubaocdn.com/s/OmP7fRLBvy',
   hongshaopaigu:'https://aka.doubaocdn.com/s/WB0FwyzoHO',
@@ -954,30 +956,30 @@ const IMG = {
   huajiaoji:'https://aka.doubaocdn.com/s/jLiVAtDRM7',
   guaiweiji:'https://aka.doubaocdn.com/s/YybkMwsrVI',
   tangcupaigu:'https://aka.doubaocdn.com/s/UjSkMBb5GE',
-  donggupaigutang:'https://aka.doubaocdn.com/s/2BalJWg06P',
+  donggupaigutang:'https://aka.doubaocdn.com/s/FuzMHuXwJ2',
   jianjiaoji2:'https://aka.doubaocdn.com/s/tqVHWpHkLj',
-  liangbanjixiongrou:'https://aka.doubaocdn.com/s/vOi1eUxbhf',
-  liangbanqiezi:'https://aka.doubaocdn.com/s/IcDDHpADK3',
+  liangbanjixiongrou:'https://aka.doubaocdn.com/s/wF92FMQt3P',
+  liangbanqiezi:'https://aka.doubaocdn.com/s/uUBPYFGHdm',
   jidaneng:'https://aka.doubaocdn.com/s/mGsHgga9cK',
   lajiaoniuganjun:'https://aka.doubaocdn.com/s/UyR5W7TvQG',
   lvdounanguatang:'https://aka.doubaocdn.com/s/Yv7oeU3Mb1',
   paojiaorousi:'https://aka.doubaocdn.com/s/V3sNisUnBN',
-  fanqijigutang:'https://aka.doubaocdn.com/s/4oMMj1ZybK',
+  fanqijigutang:'https://aka.doubaocdn.com/s/b1iRRY0efw',
   xiaojidunmogu:'https://aka.doubaocdn.com/s/qPZOqWmBcS',
   wandoujiandantang:'https://aka.doubaocdn.com/s/3WOUb9EwLZ',
   shuizhubocai:'https://aka.doubaocdn.com/s/b0bNag1HWV',
   wandoupianlajirou:'https://aka.doubaocdn.com/s/7uBOlgtMmb',
   shuizhuxiangchang:'https://aka.doubaocdn.com/s/q2TM5sU7ir',
-  huojimian:'https://aka.doubaocdn.com/s/V1S8pHhu9M',
-  yimian:'https://aka.doubaocdn.com/s/iBmjL1rfvS',
-  luosifen:'https://aka.doubaocdn.com/s/nUNMgplmUO',
-  hongshaoniuroumian:'https://aka.doubaocdn.com/s/oyAaJNgSy0',
+  huojimian:'https://aka.doubaocdn.com/s/oIfgE0HvX2',
+  yimian:'https://aka.doubaocdn.com/s/3tdJvEcOVq',
+  luosifen:'https://aka.doubaocdn.com/s/c48rabX7q2',
+  hongshaoniuroumian:'https://aka.doubaocdn.com/s/ZSfNdVpv4b',
   chongqingxiaomian:'https://aka.doubaocdn.com/s/DDvMsurqoT',
-  reganganmian:'https://aka.doubaocdn.com/s/AsqFT9JdRk',
+  reganganmian:'https://aka.doubaocdn.com/s/7UZMHY8OXL',
   suanlafen:'https://aka.doubaocdn.com/s/JL9Dagj8n4',
   dandanmian:'https://aka.doubaocdn.com/s/KCadZGDiye',
   congyoubanmian:'https://aka.doubaocdn.com/s/QZ15cVDUlG',
-  chaomian:'https://aka.doubaocdn.com/s/D1icniJJrB'
+  chaomian:'https://aka.doubaocdn.com/s/I0ghGHO2Do'
 };
 
 const DEFAULT_RECIPES = [
